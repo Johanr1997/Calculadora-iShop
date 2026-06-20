@@ -14,6 +14,8 @@ body {
     padding: 20px;
     margin: 0;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -23,6 +25,7 @@ body {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 24px;
+    flex: 1;
 }
 
 .container {
@@ -337,21 +340,36 @@ button:active {
     font-size: 13px;
 }
 
-.logo-final {
-    margin-top: 20px;
+/* FOOTER CON LOGO */
+.footer-logo {
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #d2d2d7;
+    min-height: 100px;
 }
 
-.logo-final img {
-    max-width: 80px;
+.footer-logo img {
+    max-width: 150px;
+    max-height: 80px;
     height: auto;
-    opacity: 0.5;
+    opacity: 0.7;
     transition: opacity 0.2s ease;
 }
 
-.logo-final img:hover {
-    opacity: 0.9;
+.footer-logo img:hover {
+    opacity: 1;
+}
+
+.footer-logo.no-logo {
+    color: #86868b;
+    font-size: 13px;
+    justify-content: center;
+    text-align: center;
+    height: auto;
+    padding: 20px;
 }
 
 /* MODAL */
@@ -562,12 +580,15 @@ button:active {
         font-size: 14px;
     }
 
-    .logo-final {
-        margin-top: 16px;
+    .footer-logo {
+        margin-top: 20px;
+        padding-top: 16px;
+        min-height: 80px;
     }
 
-    .logo-final img {
-        max-width: 70px;
+    .footer-logo img {
+        max-width: 120px;
+        max-height: 70px;
     }
 
     .modal-content {
@@ -626,7 +647,7 @@ button:active {
         font-size: 11px;
     }
 
-    .dispositivo-nombre {
+    .dispositivo-nome {
         font-size: 13px;
         margin-bottom: 2px;
     }
@@ -709,12 +730,15 @@ button:active {
         font-size: 10px;
     }
 
-    .logo-final {
-        margin-top: 12px;
+    .footer-logo {
+        margin-top: 16px;
+        padding-top: 12px;
+        min-height: 70px;
     }
 
-    .logo-final img {
-        max-width: 60px;
+    .footer-logo img {
+        max-width: 100px;
+        max-height: 60px;
     }
 }
 
@@ -814,6 +838,14 @@ button:active {
         border-color: #3a3a3c;
     }
 
+    .footer-logo {
+        border-top-color: #3a3a3c;
+    }
+
+    .footer-logo.no-logo {
+        color: #86868b;
+    }
+
     .modal-content {
         background: #1c1c1e;
         color: #ffffff;
@@ -823,11 +855,11 @@ button:active {
         color: #ffffff;
     }
 
-    .logo-final img {
-        opacity: 0.7;
+    .footer-logo img {
+        opacity: 0.8;
     }
 
-    .logo-final img:hover {
+    .footer-logo img:hover {
         opacity: 1;
     }
 }
@@ -938,7 +970,7 @@ button:active {
         <div class="tipo-cambio-info">
             <label>Tipo de Cambio (USD/CRC)</label>
             <div class="tipo-cambio-input">
-                <input type="number" id="tipo-cambio" value="455" step="0.01" min="1" onchange="actualizarResumen()">
+                <input type="number" id="tipo-cambio" value="610" step="0.01" min="1" onchange="actualizarResumen()">
             </div>
             <p style="font-size: 11px; color: #86868b; margin-top: 6px; margin-bottom: 0;">Edita el valor según necesites</p>
         </div>
@@ -993,12 +1025,13 @@ button:active {
             <span>Cuota Mensual (CRC):</span>
             <span id="cuota-crc" class="precio-moneda" style="font-size: 14px;">₡0.00</span>
         </div>
-
-        <picture class="logo-final">
-            <source srcset="logo-ishop-blanco.png" media="(prefers-color-scheme: dark)">
-            <img src="logo-ishop.png" alt="Logo corporativo">
-        </picture>
     </div>
+</div>
+
+<!-- FOOTER CON LOGO -->
+<div class="footer-logo" id="footer-logo">
+    <p class="no-logo">Espacio disponible para tu logo</p>
+    <img src="ishop-logo.png" alt="Logo iShop">
 </div>
 
 <!-- MODAL PARA AGREGAR ACCESORIO -->
@@ -1028,54 +1061,47 @@ button:active {
 // BASE DE DATOS DE ACCESORIOS
 const accesoriosDB = {
     iPhone: [
-        "Case",
-        "Glass (temperado)",
-        "Protector de cámaras",
-        "Cargador",
-        "AirPods",
-        "Parlante",
-        "Audífonos",
-        "Wallet",
-        "Cable",
-        "Acc. Terceros",
-        "Acc. Apple"
+        "Case Apple",
+        "JBL GO 4",
+        "Vidrio Temperado de Privacidad",
+        "Protector de Cámaras",
+        "Base de Carga Belkin 3-1",
+        "iKlear",
+        "Wallet Apple",
+        "Cargador Apple 40W",
+        "AirPods 4",
+        "AirPods Pro 3"
     ],
     MacBook: [
         "Funda",
+        "JBL GO 4",
         "HardCase",
-        "Multipuerto",
-        "Office 365",
-        "AirPods",
+        "Multiport Hub USB-C",
+        "Teclado numérico",
         "iKlear",
-        "Teclado",
-        "Mouse",
-        "Cable",
-        "Acc. Terceros",
-        "Acc. Apple"
+        "Office 365",
+        "AirPods 4",
+        "AirPods Pro 3"
     ],
     iPad: [
         "Case",
-        "Glas (temperado)",
-        "Pencil",
-        "Keyboard",
-        "Parlante",
-        "Cable",
+        "JBL GO 4",
         "iKlear",
-        "AirPods",
-        "Office 365",
-        "Acc. Terceros",
-        "Acc. Apple"
+        "Vidrio Temperado",
+        "Apple Pencil USB-C",
+        "Teclado Magic",
+        "AirPods 4",
+        "AirPods Pro 3"
     ],
     Watch: [
         "Bumper",
-        "Banda (correa)",
-        "Cargador",
-        "Base de carga",
-        "Parlante",
-        "Cable",
-        "AirPods",
-        "Acc. terceros",
-        "Acc. Apple"
+        "JBL GO 4",
+        "iKlear",
+        "Banda Apple",
+        "Cargador Apple 20W",
+        "Base de Carga Belkin 3-1",
+        "AirPods 4",
+        "AirPods Pro 3"
     ]
 };
 
@@ -1447,3 +1473,4 @@ actualizarResumen();
 
 </body>
 </html>
+
