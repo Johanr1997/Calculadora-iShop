@@ -862,6 +862,96 @@ button:active {
     .footer-logo img:hover {
         opacity: 1;
     }
+    
+    /* ESTILOS DE CONTENEDOR PARA EL LOGO INTELIGENTE */
+.logo-final {
+    margin-top: 30px;
+    display: inline-block;
+}
+
+.logo-final img {
+    max-width: 110px;
+    height: auto;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.logo-final img:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+    body { padding: 12px; background: #ffffff; }
+    .container { padding: 16px 8px; box-shadow: none; border: none; }
+    h2 { font-size: 24px; }
+    .form-inline { flex-direction: column; gap: 12px; }
+}
+
+/* ==========================================
+   IMPLEMENTACIÓN MODO OSCURO (SISTEMA)
+   ========================================== */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #000000;
+        color: #f5f5f7;
+    }
+
+    .container {
+        background: #1c1c1e;
+        border-color: #2c2c2e;
+        box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    h2, .checkbox-group label, .tarjeta-recomendacion h3 {
+        color: #ffffff;
+    }
+
+    p.subtitle, #capacidad-total, .precio-principal span, .precio-antes, .desglose-combo {
+        color: #86868b;
+    }
+
+    select, input[type="number"] {
+        background: #2c2c2e;
+        border-color: #3a3a3c;
+        color: #ffffff;
+    }
+
+    select:focus, input[type="number"]:focus {
+        border-color: #0a84ff;
+    }
+
+    .tarjeta-recomendacion {
+        background: #2c2c2e;
+        border-color: #3a3a3c;
+    }
+
+    .precio-principal {
+        color: #ffffff;
+    }
+
+    .tag-solo { 
+        background: #0a2f5c; 
+        color: #409fff; 
+    }
+    
+    .tag-combo { 
+        background: #0f3d1b; 
+        color: #52d369; 
+    }
+
+    /* Ajuste elegante del logo en modo oscuro sin invertir sus colores */
+    .logo-final img {
+        opacity: 0.7;
+    }
+    
+    .logo-final img:hover {
+        opacity: 1;
+    }
+    
+    /* Pequeño ajuste responsive en modo oscuro */
+    @media (max-width: 480px) {
+        body { background: #1c1c1e; }
+    }
 }
 </style>
 </head>
@@ -1026,10 +1116,6 @@ button:active {
             <span id="cuota-crc" class="precio-moneda" style="font-size: 14px;">₡0.00</span>
         </div>
     </div>
-        <picture class="logo-final">
-        <source srcset="logo-ishop-blanco.png" media="(prefers-color-scheme: dark)">
-        <img src="logo-ishop.png" alt="Logo corporativo">
-    </picture>
 </div>
 
 <!-- FOOTER CON LOGO -->
