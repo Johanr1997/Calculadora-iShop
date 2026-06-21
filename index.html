@@ -429,19 +429,19 @@ button:active {
             <div class="dispositivos-grid">
                 <div class="dispositivo-card activo" onclick="cambiarDispositivo(event, 'iPhone')">
                     <span class="dispositivo-nombre">iPhone</span>
-                    <span class="dispositivo-precio" id="precio-iPhone">Base: $0.00</span>
+                    <span class="dispositivo-precio" id="precio-iPhone">Desde: $589.00</span>
                 </div>
                 <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'MacBook')">
                     <span class="dispositivo-nombre">Mac</span>
-                    <span class="dispositivo-precio" id="precio-MacBook">Base: $0.00</span>
+                    <span class="dispositivo-precio" id="precio-MacBook">Desde: $779.00</span>
                 </div>
                 <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'iPad')">
                     <span class="dispositivo-nombre">iPad</span>
-                    <span class="dispositivo-precio" id="precio-iPad">Base: $0.00</span>
+                    <span class="dispositivo-precio" id="precio-iPad">Desde: $479.00</span>
                 </div>
                 <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'Watch')">
                     <span class="dispositivo-nombre">Apple Watch</span>
-                    <span class="dispositivo-precio" id="precio-Watch">Base: $0.00</span>
+                    <span class="dispositivo-precio" id="precio-Watch">Desde: $359.00</span>
                 </div>
             </div>
         </div>
@@ -452,7 +452,7 @@ button:active {
         </div>
 
         <div class="form-group">
-            <label>Accesorios De Protección</label>
+            <label>Accesorios Básicos</label>
             <div id="lista-accesorios-fijos">
                 </div>
         </div>
@@ -502,7 +502,7 @@ button:active {
 
         <div class="form-group">
             <label>Plazo (Meses)</label>
-            <input type="number" id="meses" value="12" min="1" max="24" onchange="actualizarResumen()">
+            <input type="number" id="meses" value="24" min="1" max="24" onchange="actualizarResumen()">
         </div>
     </div>
 
@@ -721,7 +721,7 @@ function renderizarAccesoriosFijos() {
             <div class="accesorio-inputs">
                 <input type="number" class="input-precio-acc" placeholder="$ Precio" value="${acc.precio || ''}" min="0" step="0.01" onchange="cambiarPrecioFijo('${acc.id}', this.value)">
                 <div class="accesorio-cantidad">
-                    <input type="number" placeholder="0" value="${acc.cantidad || ''}" min="0" onchange="cambiarCantidadFijo('${acc.id}', this.value)">
+                    <input type="number" placeholder="1" value="${acc.cantidad || ''}" min="0" onchange="cambiarCantidadFijo('${acc.id}', this.value)">
                 </div>
             </div>
         `;
@@ -737,7 +737,7 @@ function cambiarPrecioFijo(id, valor) {
 
 function cambiarCantidadFijo(id, valor) {
     const acc = accesoriosFijos.find(a => a.id === id);
-    if (acc) acc.cantidad = parseInt(valor) || 0;
+    if (acc) acc.cantidad = parseInt(valor) || 1;
     actualizarResumen();
 }
 
