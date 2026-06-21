@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Cuota - iShop</title>
+<title>Calculadora de Cuotas - iShop</title>
 
 <style>
-/* ESTILO BLANCO MINIMALISTA DE APPLE */
+/* ESTITO BLANCO MINIMALISTA DE APPLE */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: #f5f5f7;
@@ -98,7 +98,7 @@ select, input[type="number"], input[type="text"] {
 }
 
 select:focus, input[type="number"]:focus, input[type="text"]:focus {
-    border-color: #0071e3;
+    border-color: #E86518;
 }
 
 /* DISPOSITIVOS SELECTOR CON PRECIO */
@@ -144,7 +144,7 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
     opacity: 0.8;
 }
 
-/* ACCESORIOS LISTA */
+/* ACCESORIOS LISTA CONSTANTE Y EN CARRITO */
 .accesorios-container {
     margin-bottom: 20px;
 }
@@ -171,10 +171,17 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
     color: #1d1d1f;
 }
 
-.accesorio-precio {
-    font-size: 13px;
-    color: #86868b;
-    margin-top: 2px;
+.accesorio-inputs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.input-precio-acc {
+    width: 90px !important;
+    padding: 8px !important;
+    font-size: 13px !important;
+    text-align: right;
 }
 
 .accesorio-cantidad {
@@ -274,7 +281,7 @@ button {
 }
 
 button:hover {
-    background: #E86518;
+    background: #d65914;
 }
 
 button:active {
@@ -303,12 +310,6 @@ button:active {
 
 .precio-moneda {
     font-weight: 600;
-}
-
-.divisa {
-    font-size: 12px;
-    color: #86868b;
-    font-weight: 400;
 }
 
 .tipo-cambio-info {
@@ -350,10 +351,6 @@ button:active {
     transition: opacity 0.2s ease;
 }
 
-.logo-final img:hover {
-    opacity: 0.9;
-}
-
 /* MODAL */
 .modal {
     display: none;
@@ -378,8 +375,6 @@ button:active {
     padding: 30px;
     max-width: 400px;
     width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
 }
 
 .modal-content h3 {
@@ -387,450 +382,38 @@ button:active {
     color: #1d1d1f;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE MÓVIL OPTIMIZADO */
 @media (max-width: 1024px) {
-    .main-container {
-        grid-template-columns: 1fr;
-    }
-
-    .container.resumen {
-        position: static;
-        margin-top: 24px;
-    }
+    .main-container { grid-template-columns: 1fr; }
+    .container.resumen { position: static; margin-top: 24px; }
 }
 
 @media (max-width: 768px) {
-    body {
-        padding: 12px;
-    }
-
-    .main-container {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .container {
-        padding: 20px 16px;
-    }
-
-    .container.resumen {
-        position: static;
-        margin-top: 16px;
-    }
-
-    h2 {
-        font-size: 22px;
-        margin-bottom: 6px;
-    }
-
-    p.subtitle {
-        font-size: 13px;
-        margin-bottom: 16px;
-    }
-
-    .dispositivos-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-bottom: 16px;
-    }
-
-    .dispositivo-card {
-        padding: 12px;
-        font-size: 12px;
-    }
-
-    .dispositivo-nombre {
-        margin-bottom: 3px;
-    }
-
-    .dispositivo-precio {
-        font-size: 11px;
-    }
-
-    select, input[type="number"], input[type="text"] {
-        padding: 14px;
-        font-size: 16px;
-        border-radius: 10px;
-    }
-
-    .form-group {
-        margin-bottom: 14px;
-    }
-
-    .form-inline {
-        gap: 10px;
-    }
-
-    label {
-        font-size: 10px;
-        margin-bottom: 6px;
-    }
-
-    .accesorio-item {
-        padding: 10px;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .accesorio-nombre {
-        font-size: 13px;
-    }
-
-    .accesorio-precio {
-        font-size: 12px;
-    }
-
-    .accesorio-cantidad {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .accesorio-cantidad input {
-        width: 50px;
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .btn-eliminar {
-        padding: 8px 14px;
-        font-size: 11px;
-    }
-
-    .checkbox-group {
-        padding: 12px;
-        margin-bottom: 10px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .checkbox-group input {
-        margin-top: 2px;
-    }
-
-    .checkbox-group label {
-        font-size: 13px;
-    }
-
-    .agregado-selector {
-        width: 100%;
-        min-width: 100%;
-        margin-top: 8px;
-    }
-
-    .agregado-selector select {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .agregado-costo {
-        width: 100%;
-        margin-top: 6px;
-        font-size: 13px;
-    }
-
-    button {
-        padding: 14px;
-        font-size: 15px;
-        margin-top: 8px;
-    }
-
-    .resumen-item {
-        font-size: 12px;
-        margin-bottom: 8px;
-        padding-bottom: 8px;
-    }
-
-    .resumen-item.total {
-        font-size: 15px;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-    }
-
-    .tipo-cambio-info {
-        padding: 10px;
-        margin-bottom: 12px;
-        font-size: 11px;
-    }
-
-    .tipo-cambio-input {
-        gap: 6px;
-    }
-
-    .tipo-cambio-input input {
-        padding: 8px;
-        font-size: 14px;
-    }
-
-    .logo-final {
-        margin-top: 16px;
-    }
-
-    .logo-final img {
-        max-width: 70px;
-    }
-
-    .modal-content {
-        padding: 20px;
-        border-radius: 16px;
-    }
-
-    .modal-content h3 {
-        font-size: 18px;
-        margin-bottom: 12px;
-    }
-
-    .modal-content .form-group {
-        margin-bottom: 12px;
-    }
-
-    #accesorios-disponibles button {
-        padding: 12px;
-        font-size: 14px;
-        margin-top: 6px;
-    }
-
-    #accesorios-seleccionados {
-        margin-bottom: 12px;
-    }
+    body { padding: 12px; }
+    .container { padding: 20px 16px; }
+    h2 { font-size: 22px; }
+    select, input[type="number"], input[type="text"] { padding: 14px; font-size: 16px; }
+    .accesorio-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .accesorio-inputs { width: 100%; justify-content: space-between; }
+    .checkbox-group { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .agregado-selector { width: 100%; }
 }
 
-@media (max-width: 480px) {
-    body {
-        padding: 10px;
-    }
-
-    .container {
-        padding: 16px 12px;
-        border-radius: 16px;
-    }
-
-    h2 {
-        font-size: 20px;
-        margin-bottom: 4px;
-    }
-
-    p.subtitle {
-        font-size: 12px;
-        margin-bottom: 12px;
-    }
-
-    .dispositivos-grid {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        margin-bottom: 12px;
-    }
-
-    .dispositivo-card {
-        padding: 11px;
-        font-size: 11px;
-    }
-
-    .dispositivo-nombre {
-        font-size: 13px;
-        margin-bottom: 2px;
-    }
-
-    .dispositivo-precio {
-        font-size: 10px;
-    }
-
-    select, input[type="number"], input[type="text"] {
-        padding: 12px;
-        font-size: 16px;
-        border-radius: 8px;
-    }
-
-    .form-group {
-        margin-bottom: 12px;
-    }
-
-    .form-inline {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .form-inline .form-group {
-        margin-bottom: 10px;
-    }
-
-    label {
-        font-size: 9px;
-        margin-bottom: 5px;
-    }
-
-    .accesorio-item {
-        padding: 8px;
-        gap: 8px;
-    }
-
-    .accesorio-nombre {
-        font-size: 12px;
-    }
-
-    .accesorio-precio {
-        font-size: 11px;
-    }
-
-    .checkbox-group {
-        padding: 10px;
-        margin-bottom: 8px;
-    }
-
-    .checkbox-group label {
-        font-size: 12px;
-    }
-
-    .agregado-costo {
-        font-size: 11px;
-    }
-
-    button {
-        padding: 12px;
-        font-size: 14px;
-        margin-top: 6px;
-    }
-
-    .resumen-item {
-        font-size: 11px;
-        margin-bottom: 6px;
-        padding-bottom: 6px;
-    }
-
-    .resumen-item.total {
-        font-size: 14px;
-        padding-bottom: 8px;
-        margin-bottom: 8px;
-    }
-
-    .tipo-cambio-info {
-        padding: 8px;
-        margin-bottom: 10px;
-        font-size: 10px;
-    }
-
-    .logo-final {
-        margin-top: 12px;
-    }
-
-    .logo-final img {
-        max-width: 60px;
-    }
-}
-
-/* ==========================================
-   MODO OSCURO (SISTEMA)
-   ========================================== */
 @media (prefers-color-scheme: dark) {
-    body {
-        background: #000000;
-        color: #f5f5f7;
-    }
-
-    .container {
-        background: #1c1c1e;
-        border-color: #2c2c2e;
-        box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.25);
-    }
-
-    h2 {
-        color: #ffffff;
-    }
-
-    p.subtitle {
-        color: #86868b;
-    }
-
-    select, input[type="number"], input[type="text"] {
-        background: #2c2c2e;
-        border-color: #3a3a3c;
-        color: #ffffff;
-    }
-
-    select:focus, input[type="number"]:focus, input[type="text"]:focus {
-        border-color: #0a84ff;
-    }
-
-    .dispositivo-card {
-        background: #2c2c2e;
-        border-color: #3a3a3c;
-        color: #ffffff;
-    }
-
-    .dispositivo-card:hover {
-        border-color: #E86518;
-    }
-
-    .dispositivo-card.activo {
-        background: #E86518;
-        color: #ffffff;
-        border-color: #E86518;
-    }
-
-    .accesorio-item {
-        background: #2c2c2e;
-        border-color: #3a3a3c;
-    }
-
-    /* CORREGIDO MEDIANTE TU INTEGRACIÓN COLEGIAL */
-    .accesorio-nombre {
-        color: #ffffff;
-    }
-
-    .accesorio-precio {
-        color: #86868b;
-    }
-
-    .accesorio-cantidad input {
-        background: #3a3a3c;
-        border-color: #3a3a3c;
-        color: #ffffff;
-    }
-
-    .checkbox-group {
-        background: #2c2c2e;
-        border-color: #3a3a3c;
-    }
-
-    .checkbox-group label {
-        color: #ffffff;
-    }
-
-    .agregado-costo {
-        color: #0a84ff;
-    }
-
-    .resumen-item {
-        color: #86868b;
-        border-bottom-color: #3a3a3c;
-    }
-
-    .resumen-item.total {
-        color: #ffffff;
-        border-bottom-color: #3a3a3c;
-    }
-
-    .tipo-cambio-info {
-        background: #2c2c2e;
-        border-color: #3a3a3c;
-    }
-
-    .modal-content {
-        background: #1c1c1e;
-        color: #ffffff;
-    }
-
-    .modal-content h3 {
-        color: #ffffff;
-    }
-
-    .logo-final img {
-        opacity: 0.7;
-    }
-
-    .logo-final img:hover {
-        opacity: 1;
-    }
+    body { background: #000000; color: #f5f5f7; }
+    .container { background: #1c1c1e; border-color: #2c2c2e; }
+    h2 { color: #ffffff; }
+    select, input[type="number"], input[type="text"] { background: #2c2c2e; border-color: #3a3a3c; color: #ffffff; }
+    .dispositivo-card { background: #2c2c2e; border-color: #3a3a3c; color: #ffffff; }
+    .accesorio-item { background: #2c2c2e; border-color: #3a3a3c; }
+    .accesorio-nombre { color: #ffffff; }
+    .checkbox-group { background: #2c2c2e; }
+    .checkbox-group label { color: #ffffff; }
+    .resumen-item { border-bottom-color: #3a3a3c; color: #86868b; }
+    .resumen-item.total { color: #ffffff; }
+    .tipo-cambio-info { background: #2c2c2e; }
+    .modal-content { background: #1c1c1e; color: #ffffff; }
+    .modal-content h3 { color: #ffffff; }
 }
 </style>
 </head>
@@ -838,25 +421,25 @@ button:active {
 
 <div class="main-container">
     <div class="container">
-        <h2>Calculador de Cuota</h2>
-        <p class="subtitle">Elige el dispositivo y los accesorios.</p>
+        <h2>Calculadora de Cuotas</h2>
+        <p class="subtitle">Elige el dispositivo y define los accesorios necesarios.</p>
 
         <div class="form-group">
             <label>Dispositivo</label>
             <div class="dispositivos-grid">
-                <div class="dispositivo-card activo" onclick="cambiarDispositivo(event, 'iPhone', 0)">
+                <div class="dispositivo-card activo" onclick="cambiarDispositivo(event, 'iPhone')">
                     <span class="dispositivo-nombre">iPhone</span>
                     <span class="dispositivo-precio" id="precio-iPhone">Base: $0.00</span>
                 </div>
-                <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'MacBook', 0)">
+                <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'MacBook')">
                     <span class="dispositivo-nombre">Mac</span>
                     <span class="dispositivo-precio" id="precio-MacBook">Base: $0.00</span>
                 </div>
-                <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'iPad', 0)">
+                <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'iPad')">
                     <span class="dispositivo-nombre">iPad</span>
                     <span class="dispositivo-precio" id="precio-iPad">Base: $0.00</span>
                 </div>
-                <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'Watch', 0)">
+                <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'Watch')">
                     <span class="dispositivo-nombre">Apple Watch</span>
                     <span class="dispositivo-precio" id="precio-Watch">Base: $0.00</span>
                 </div>
@@ -869,13 +452,15 @@ button:active {
         </div>
 
         <div class="form-group">
-            <label>Agregar Accesorios</label>
-            <div id="accesorios-disponibles"></div>
+            <label>Accesorios De Protección</label>
+            <div id="lista-accesorios-fijos">
+                </div>
         </div>
 
         <div class="form-group">
-            <label>Accesorios en tu Carrito</label>
-            <div id="accesorios-seleccionados" class="accesorios-container"></div>
+            <label>Otros Accesorios Adicionales</label>
+            <button type="button" onclick="abrirModal()" style="margin-top: 5px; background: #2c2c2e; color: white;">+ Agregar Otro Accesorio</button>
+            <div id="accesorios-adicionales-container" style="margin-top: 12px;"></div>
         </div>
 
         <div class="form-group">
@@ -919,7 +504,6 @@ button:active {
             <label>Plazo (Meses)</label>
             <input type="number" id="meses" value="12" min="1" max="24" onchange="actualizarResumen()">
         </div>
-
     </div>
 
     <div class="container resumen">
@@ -930,7 +514,6 @@ button:active {
             <div class="tipo-cambio-input">
                 <input type="number" id="tipo-cambio" value="455" step="0.01" min="1" onchange="actualizarResumen()">
             </div>
-            <p style="font-size: 11px; color: #86868b; margin-top: 6px; margin-bottom: 0;">Edita el valor según necesites</p>
         </div>
 
         <div class="resumen-item">
@@ -992,12 +575,10 @@ button:active {
 
 <div id="modal-accesorio" class="modal">
     <div class="modal-content">
-        <h3>Agregar Accesorio</h3>
+        <h3>Otro Accesorio</h3>
         <div class="form-group">
             <label>Nombre del Accesorio</label>
-            <select id="select-accesorio">
-                <option value="">Selecciona un accesorio</option>
-            </select>
+            <input type="text" id="custom-nombre" placeholder="Ej. Hub USB-C, Paño de limpieza">
         </div>
         <div class="form-group">
             <label>Precio ($)</label>
@@ -1008,65 +589,12 @@ button:active {
             <input type="number" id="custom-cantidad" value="1" min="1">
         </div>
         <button onclick="agregarAccesorioDesdeModal()" style="margin-top: 0;">Agregar</button>
-        <button onclick="cerrarModal()" style="background: #86868b;">Cancelar</button>
+        <button onclick="cerrarModal()" style="background: #86868b; margin-top: 8px;">Cancelar</button>
     </div>
 </div>
 
 <script>
-// BASE DE DATOS DE ACCESORIOS
-const accesoriosDB = {
-    iPhone: [
-        "Case",
-        "Glass (temperado)",
-        "Protector de Cámaras",
-        "Cargador",
-        "Parlante",
-        "Cable",
-        "Batería Externa",
-        "AirPods",
-        "Acc. Terceros",
-        "Acc. Apple"
-    ],
-    MacBook: [
-        "Funda",
-        "HardCase",
-        "Multipuerto",
-        "Teclado",
-        "Mouse",
-        "Disco Duro Externo",
-        "iKlear",
-        "Microsoft Office",
-        "Parlante",
-        "AirPods",
-        "Acc. Terceros",
-        "Acc. Apple"
-    ],
-    iPad: [
-        "Case",
-        "Glass (temperado)",
-        "Pencil",
-        "Keyboard",
-        "PaperFilm",
-        "Microsoft Office",
-        "iKlear",
-        "Parlante",
-        "AirPods",
-        "Acc. Terceros",
-        "Acc. Apple"
-    ],
-    Watch: [
-        "Bumper",
-        "Correa",
-        "Cargador",
-        "Base de carga",
-        "Parlante",
-        "AirPods",
-        "Acc. Terceros",
-        "Acc. Apple"
-    ]
-};
-
-// MATRIZ DE CONFIGURACIÓN GAREX
+// MATRICES GAREX Y SEGUROS SIN ALTERACIÓN
 const dbGarex = {
     "iPhone": [
         { mesesAdic: 12, rangos: [{ hasta: 250, costo: 13.33 }, { hasta: 500, costo: 26.67 }, { hasta: 1000, costo: 33.33 }, { hasta: 1500, costo: 40 }, { hasta: 2000, costo: 46.67 }, { hasta: 2500, costo: 50 }] },
@@ -1077,7 +605,6 @@ const dbGarex = {
     ]
 };
 
-// MATRIZ DE SEGUROS
 const dbSeguros = {
     "iPhone": [
         { tipo: "Robo y Hurto", meses: 12, rangos: [{ hasta: 450, c: 40 }, { hasta: 650, c: 64 }, { hasta: 900, c: 90 }, { hasta: 1250, c: 95 }, { hasta: 1625, c: 140 }, { hasta: 2000, c: 175 }, { hasta: 2375, c: 210 }, { hasta: 3000, c: 255 }] },
@@ -1089,8 +616,8 @@ const dbSeguros = {
     ],
     "MacBook": [
         { tipo: "Accidental", meses: 12, rangos: [{ hasta: 800, c: 45 }, { hasta: 1000, c: 60 }, { hasta: 1500, c: 75 }, { hasta: 2000, c: 130 }, { hasta: 2500, c: 155 }, { hasta: 4250, c: 195 }, { hasta: 5000, c: 280 }, { hasta: 6250, c: 340 }] },
-        { tipo: "Accidental", meses: 18, rangos: [{ hasta: 800, c: 65 }, { hasta: 1000, c: 85 }, { hasta: 1500, c: 110 }, { hasta: 2000, c: 180 }, { hasta: 2500, c: 215 }, { hasta: 4250, c: 275 }, { hasta: 5000, c: 390 }, { hasta: 6250, c: 475 }] },
-        { tipo: "Accidental", meses: 24, rangos: [{ hasta: 800, c: 70 }, { hasta: 1000, c: 100 }, { hasta: 1500, c: 125 }, { hasta: 2000, c: 210 }, { hasta: 2450, c: 245 }, { hasta: 4250, c: 310 }, { hasta: 5000, c: 445 }, { hasta: 6250, c: 540 }] },
+        { tipo: "Accidental", meses: 18, rangos: [{ hasta: 800, c: 65 }, { hasta: 1000, c: 85 }, { hasta: 1500, c: 110 }, { hasta: 2000, c: 180 }, { hasta: 2150, c: 215 }, { hasta: 4250, c: 275 }, { hasta: 5000, c: 390 }, { hasta: 6250, c: 475 }] },
+        { tipo: "Accidental", meses: 24, rangos: [{ hasta: 800, c: 70 }, { hasta: 1000, c: 100 }, { hasta: 1500, c: 125 }, { hasta: 210 }, { hasta: 2450, c: 245 }, { hasta: 4250, c: 310 }, { hasta: 5000, c: 445 }, { hasta: 6250, c: 540 }] },
         { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 800, c: 70 }, { hasta: 1000, c: 95 }, { hasta: 1500, c: 130 }, { hasta: 2000, c: 215 }, { hasta: 2500, c: 280 }, { hasta: 4250, c: 355 }, { hasta: 5000, c: 510 }, { hasta: 6250, c: 615 }] },
         { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 800, c: 95 }, { hasta: 1000, c: 130 }, { hasta: 1500, c: 180 }, { hasta: 2000, c: 305 }, { hasta: 2500, c: 390 }, { hasta: 4250, c: 500 }, { hasta: 5000, c: 710 }, { hasta: 6250, c: 865 }] },
         { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 800, c: 110 }, { hasta: 1000, c: 150 }, { hasta: 1500, c: 210 }, { hasta: 2000, c: 345 }, { hasta: 2500, c: 450 }, { hasta: 4250, c: 570 }, { hasta: 5000, c: 810 }, { hasta: 6250, c: 985 }] }
@@ -1099,13 +626,13 @@ const dbSeguros = {
         { tipo: "Robo y Hurto", meses: 12, rangos: [{ hasta: 450, c: 25 }, { hasta: 650, c: 40 }, { hasta: 900, c: 55 }, { hasta: 1250, c: 65 }, { hasta: 1625, c: 85 }, { hasta: 2000, c: 105 }, { hasta: 2375, c: 125 }, { hasta: 2625, c: 145 }, { hasta: 2875, c: 160 }, { hasta: 3125, c: 175 }, { hasta: 3500, c: 190 }, { hasta: 3875, c: 210 }, { hasta: 5000, c: 285 }] },
         { tipo: "Robo y Hurto", meses: 18, rangos: [{ hasta: 450, c: 35 }, { hasta: 650, c: 55 }, { hasta: 900, c: 75 }, { hasta: 1250, c: 90 }, { hasta: 1625, c: 116 }, { hasta: 2000, c: 145 }, { hasta: 2375, c: 175 }, { hasta: 2625, c: 200 }, { hasta: 2875, c: 220 }, { hasta: 3125, c: 240 }, { hasta: 3500, c: 265 }, { hasta: 3875, c: 295 }, { hasta: 5000, c: 400 }] },
         { tipo: "Robo y Hurto", meses: 24, rangos: [{ hasta: 450, c: 40 }, { hasta: 650, c: 60 }, { hasta: 900, c: 85 }, { hasta: 1250, c: 100 }, { hasta: 1625, c: 135 }, { hasta: 2000, c: 170 }, { hasta: 2375, c: 200 }, { hasta: 2625, c: 230 }, { hasta: 2875, c: 255 }, { hasta: 3125, c: 275 }, { hasta: 3500, c: 305 }, { hasta: 3875, c: 340 }, { hasta: 5000, c: 455 }] },
-        { tipo: "Servicio Robo", meses: 12, rangos: [{ hasta: 450, c: 50 }, { hasta: 650, c: 80 }, { hasta: 900, c: 110 }, { hasta: 1250, c: 130 }, { hasta: 1625, c: 170 }, { hasta: 2000, c: 210 }, { hasta: 2375, c: 260 }, { hasta: 2625, c: 295 }, { hasta: 2875, c: 325 }, { hasta: 3125, c: 350 }, { hasta: 3500, c: 390 }, { hasta: 3875, c: 435 }, { hasta: 5000, c: 570 }] },
-        { tipo: "Servicio Robo", meses: 18, rangos: [{ hasta: 450, c: 70 }, { hasta: 650, c: 110 }, { hasta: 900, c: 155 }, { hasta: 1250, c: 185 }, { hasta: 2375, c: 235 }, { hasta: 2000, c: 300 }, { hasta: 2375, c: 360 }, { hasta: 2625, c: 410 }, { hasta: 2875, c: 450 }, { hasta: 3125, c: 495 }, { hasta: 3500, c: 545 }, { hasta: 3875, c: 605 }, { hasta: 5000, c: 800 }] },
-        { tipo: "Servicio Robo", meses: 24, rangos: [{ hasta: 450, c: 80 }, { hasta: 650, c: 125 }, { hasta: 900, c: 175 }, { hasta: 1250, c: 210 }, { hasta: 1625, c: 270 }, { hasta: 2000, c: 340 }, { hasta: 2375, c: 410 }, { hasta: 2625, c: 470 }, { hasta: 2875, c: 515 }, { hasta: 3125, c: 565 }, { hasta: 3500, c: 620 }, { hasta: 3875, c: 690 }, { hasta: 5000, c: 915 }] }
+        { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 450, c: 50 }, { hasta: 650, c: 80 }, { hasta: 900, c: 110 }, { hasta: 1250, c: 130 }, { hasta: 1625, c: 170 }, { hasta: 2000, c: 210 }, { hasta: 260 }, { hasta: 2625, c: 295 }, { hasta: 2875, c: 325 }, { hasta: 3125, c: 350 }, { hasta: 3900, c: 390 }, { hasta: 3875, c: 435 }, { hasta: 5000, c: 570 }] },
+        { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 450, c: 70 }, { hasta: 650, c: 110 }, { hasta: 900, c: 155 }, { hasta: 1250, c: 185 }, { hasta: 2375, c: 235 }, { hasta: 2000, c: 300 }, { hasta: 2375, c: 360 }, { hasta: 2625, c: 410 }, { hasta: 2875, c: 450 }, { milestone: 3125, c: 495 }, { hasta: 3500, c: 545 }, { hasta: 3875, c: 605 }, { hasta: 5000, c: 800 }] },
+        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 450, c: 80 }, { hasta: 650, c: 125 }, { hasta: 900, c: 175 }, { hasta: 1250, c: 210 }, { hasta: 1625, c: 270 }, { hasta: 2000, c: 340 }, { hasta: 2375, c: 410 }, { hasta: 2625, c: 470 }, { hasta: 2875, c: 515 }, { hasta: 3125, c: 565 }, { hasta: 3500, c: 620 }, { hasta: 3875, c: 690 }, { hasta: 5000, c: 915 }] }
     ],
     "Watch": [
         { tipo: "Servicio Robo", meses: 12, rangos: [{ hasta: 450, c: 15 }, { hasta: 650, c: 25 }, { hasta: 900, c: 35 }, { hasta: 1150, c: 45 }, { hasta: 1400, c: 55 }] },
-        { tipo: "Servicio Robo", meses: 18, rangos: [{ hasta: 450, c: 20 }, { hasta: 650, c: 30 }, { hasta: 900, c: 45 }, { hasta: 1150, c: 60 }, { hasta: 1400, c: 75 }] },
+        { tipo: "Servicio Robo", meses: 18, rangos: [{ hasta: 450, c: 20 }, { hasta: 650, c: 30 }, { hasta: 900, c: 45 }, { hasta: 1150, c: 60 }, { hasta: 1400, c: 95 }] },
         { tipo: "Servicio Robo", meses: 24, rangos: [{ hasta: 450, c: 25 }, { hasta: 650, c: 40 }, { hasta: 900, c: 50 }, { hasta: 1150, c: 70 }, { hasta: 1400, c: 85 }] },
         { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 450, c: 45 }, { hasta: 650, c: 70 }, { hasta: 900, c: 95 }, { hasta: 1150, c: 110 }, { hasta: 1400, c: 130 }] },
         { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 450, c: 60 }, { hasta: 650, c: 95 }, { hasta: 900, c: 135 }, { hasta: 1150, c: 155 }, { hasta: 1400, c: 185 }] },
@@ -1115,84 +642,172 @@ const dbSeguros = {
 
 // ESTADO GLOBAL
 let dispositivoActual = "iPhone";
-let accesoriosSeleccionados = [];
 
-// FUNCIÓN INTEGRADA CORREGIDA COMPLETA
-function cambiarDispositivo(event, dispositivo, precio) {
+// MATRIZ DINÁMICA DE ACCESORIOS SEGÚN EL DISPOSITIVO SELECCIONADO
+const matrizAccesoriosPorDispositivo = {
+    "iPhone": [
+        { id: "case", nombre: "Case", precio: 0, cantidad: 0 },
+        { id: "glass", nombre: "Glass", precio: 0, cantidad: 0 },
+        { id: "protector_camaras", nombre: "Protector de Cámaras", precio: 0, cantidad: 0 },
+        { id: "cargador", nombre: "Cargador", precio: 0, cantidad: 0 },
+        { id: "airpods", nombre: "AirPods", precio: 0, cantidad: 0 }
+    ],
+    "MacBook": [
+        { id: "hardcase", nombre: "HardCase", precio: 0, cantidad: 0 },
+        { id: "funda", nombre: "Funda", precio: 0, cantidad: 0 },
+        { id: "office", nombre: "Microsoft Office", precio: 0, cantidad: 0 },
+        { id: "iklear", nombre: "iKlear", precio: 0, cantidad: 0 },
+        { id: "airpods", nombre: "AirPods", precio: 0, cantidad: 0 }
+    ],
+    "iPad": [
+        { id: "case", nombre: "Case", precio: 0, cantidad: 0 },
+        { id: "glass", nombre: "Glass", precio: 0, cantidad: 0 },
+        { id: "pencil", nombre: "Pencil", precio: 0, cantidad: 0 },
+        { id: "paperfilm", nombre: "PaperFilm", precio: 0, cantidad: 0 },
+        { id: "airpods", nombre: "AirPods", precio: 0, cantidad: 0 }
+    ],
+    "Watch": [
+        { id: "bumper", nombre: "Bumper", precio: 0, cantidad: 0 },
+        { id: "correa", nombre: "Correa", precio: 0, cantidad: 0 },
+        { id: "cargador", nombre: "Cargador", precio: 0, cantidad: 0 },
+        { id: "base_carga", nombre: "Base de Carga", precio: 0, cantidad: 0 },
+        { id: "airpods", nombre: "AirPods", precio: 0, cantidad: 0 }
+    ]
+};
+
+// REFERENCIA ACTIVA EN MEMORIA
+let accesoriosFijos = JSON.parse(JSON.stringify(matrizAccesoriosPorDispositivo["iPhone"]));
+let accesoriosAdicionales = [];
+
+// CAMBIAR DISPOSITIVO
+function cambiarDispositivo(event, dispositivo) {
     dispositivoActual = dispositivo;
 
-    // Quitar selección previa
-    document.querySelectorAll(".dispositivo-card")
-        .forEach(card => card.classList.remove("activo"));
-
-    // Activar seleccionado correctamente
+    document.querySelectorAll(".dispositivo-card").forEach(card => card.classList.remove("activo"));
     event.target.closest(".dispositivo-card").classList.add("activo");
 
-    // Resetear precio
-    document.getElementById("precio-dispositivo").value = precio || "";
-
-    // LIMPIAR ACCESORIOS (MEJORA CLAVE)
-    accesoriosSeleccionados = [];
-    renderizarSeleccionados();
-
-    // Re-render
-    renderizarAccesorios();
-    renderizarSelectAccesorios();
+    document.getElementById("precio-dispositivo").value = "";
+    
+    // Asignar los nuevos accesorios limpios correspondientes al dispositivo mapeado
+    accesoriosFijos = JSON.parse(JSON.stringify(matrizAccesoriosPorDispositivo[dispositivoActual]));
+    accesoriosAdicionales = [];
+    
+    renderizarAccesoriosFijos();
+    renderizarAdicionales();
     renderizarOpcionesGarex();
     renderizarOpcionesSeguro();
     actualizarResumen();
 }
 
-// ACTUALIZAR PRECIO DEL DISPOSITIVO EN LOS BOTONES
 function actualizarPrecioDispositivo() {
     const precio = parseFloat(document.getElementById("precio-dispositivo").value) || 0;
     const formatoUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-    
     document.getElementById(`precio-${dispositivoActual}`).textContent = `Base: ${formatoUSD.format(precio)}`;
     actualizarResumen();
 }
 
-// RENDERIZAR SELECT DE ACCESORIOS
-function renderizarSelectAccesorios() {
-    const select = document.getElementById("select-accesorio");
-    select.innerHTML = '<option value="">Selecciona un accesorio</option>';
-    
-    accesoriosDB[dispositivoActual].forEach(accesorio => {
-        const option = document.createElement("option");
-        option.value = accesorio;
-        option.textContent = accesorio;
-        select.appendChild(option);
-    });
-}
-
-// RENDERIZAR BOTONES PARA AGREGAR ACCESORIOS
-function renderizarAccesorios() {
-    const container = document.getElementById("accesorios-disponibles");
+// RENDERIZAR LOS ACCESORIOS FIJOS DEL DISPOSITIVO ACTIVO
+function renderizarAccesoriosFijos() {
+    const container = document.getElementById("lista-accesorios-fijos");
     container.innerHTML = "";
-    
-    accesoriosDB[dispositivoActual].forEach(accesorio => {
-        const button = document.createElement("button");
-        button.style.width = "100%";
-        button.style.padding = "10px";
-        button.style.marginTop = "8px";
-        button.textContent = `+ ${accesorio}`;
-        button.onclick = () => {
-            document.getElementById("select-accesorio").value = accesorio;
-            document.getElementById("custom-precio").value = "";
-            document.getElementById("custom-cantidad").value = "1";
-            abrirModal();
-        };
-        container.appendChild(button);
+
+    accesoriosFijos.forEach((acc) => {
+        const div = document.createElement("div");
+        div.className = "accesorio-item";
+        div.innerHTML = `
+            <div class="accesorio-info">
+                <div class="accesorio-nombre">${acc.nombre}</div>
+            </div>
+            <div class="accesorio-inputs">
+                <input type="number" class="input-precio-acc" placeholder="$ Precio" value="${acc.precio || ''}" min="0" step="0.01" onchange="cambiarPrecioFijo('${acc.id}', this.value)">
+                <div class="accesorio-cantidad">
+                    <input type="number" placeholder="0" value="${acc.cantidad || ''}" min="0" onchange="cambiarCantidadFijo('${acc.id}', this.value)">
+                </div>
+            </div>
+        `;
+        container.appendChild(div);
     });
 }
 
-// RENDERIZAR OPCIONES GAREX
+function cambiarPrecioFijo(id, valor) {
+    const acc = accesoriosFijos.find(a => a.id === id);
+    if (acc) acc.precio = parseFloat(valor) || 0;
+    actualizarResumen();
+}
+
+function cambiarCantidadFijo(id, valor) {
+    const acc = accesoriosFijos.find(a => a.id === id);
+    if (acc) acc.cantidad = parseInt(valor) || 0;
+    actualizarResumen();
+}
+
+// GESTIÓN DE ACCESORIOS TOTALMENTE VARIABLES / OTROS
+function abrirModal() {
+    document.getElementById("modal-accesorio").classList.add("activo");
+}
+
+function cerrarModal() {
+    document.getElementById("modal-accesorio").classList.remove("activo");
+    document.getElementById("custom-nombre").value = "";
+    document.getElementById("custom-precio").value = "";
+    document.getElementById("custom-cantidad").value = "1";
+}
+
+function agregarAccesorioDesdeModal() {
+    const nombre = document.getElementById("custom-nombre").value.trim();
+    const precio = parseFloat(document.getElementById("custom-precio").value);
+    const cantidad = parseInt(document.getElementById("custom-cantidad").value);
+
+    if (!nombre || isNaN(precio) || precio < 0 || isNaN(cantidad) || cantidad < 1) {
+        alert("Completa adecuadamente los parámetros del accesorio");
+        return;
+    }
+
+    accesoriosAdicionales.push({ nombre, precio, cantidad });
+    renderizarAdicionales();
+    actualizarResumen();
+    cerrarModal();
+}
+
+function renderizarAdicionales() {
+    const container = document.getElementById("accesorios-adicionales-container");
+    container.innerHTML = "";
+
+    accesoriosAdicionales.forEach((acc, index) => {
+        const div = document.createElement("div");
+        div.className = "accesorio-item";
+        div.innerHTML = `
+            <div class="accesorio-info">
+                <div class="accesorio-nombre">${acc.nombre}</div>
+                <div style="font-size: 12px; color: #86868b; margin-top:2px;">$${acc.precio.toFixed(2)} c/u</div>
+            </div>
+            <div class="accesorio-inputs">
+                <div class="accesorio-cantidad">
+                    <input type="number" value="${acc.cantidad}" min="1" onchange="cambiarCantidadAdicional(${index}, this.value)">
+                    <button class="btn-eliminar" onclick="eliminarAdicional(${index})">✕</button>
+                </div>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function cambiarCantidadAdicional(index, valor) {
+    accesoriosAdicionales[index].cantidad = parseInt(valor) || 1;
+    actualizarResumen();
+}
+
+function eliminarAdicional(index) {
+    accesoriosAdicionales.splice(index, 1);
+    renderizarAdicionales();
+    actualizarResumen();
+}
+
+// LOGICA AUXILIAR REQUERIDA (GAREX Y SEGUROS)
 function renderizarOpcionesGarex() {
     const select = document.getElementById("garex-select");
     select.innerHTML = '<option value="">Selecciona plazo</option>';
-    
     let opciones = (dispositivoActual === "iPhone") ? dbGarex["iPhone"] : dbGarex["Otros"];
-    
     opciones.forEach(opt => {
         const option = document.createElement("option");
         option.value = `${opt.mesesAdic}`;
@@ -1201,24 +816,18 @@ function renderizarOpcionesGarex() {
     });
 }
 
-// RENDERIZAR OPCIONES SEGURO
 function renderizarOpcionesSeguro() {
     const select = document.getElementById("seguro-select");
     select.innerHTML = '<option value="">Selecciona tipo</option>';
-    
     if (!dbSeguros[dispositivoActual]) return;
     
     const tipos = [];
-    dbSeguros[dispositivoActual].forEach(seg => {
-        if (!tipos.includes(seg.tipo)) tipos.push(seg.tipo);
-    });
-    
+    dbSeguros[dispositivoActual].forEach(seg => { if (!tipos.includes(seg.tipo)) tipos.push(seg.tipo); });
     const meses = [...new Set(dbSeguros[dispositivoActual].map(s => s.meses))].sort((a, b) => a - b);
     
     tipos.forEach(tipo => {
         meses.forEach(mes => {
-            const existe = dbSeguros[dispositivoActual].find(s => s.tipo === tipo && s.meses === mes);
-            if (existe) {
+            if (dbSeguros[dispositivoActual].find(s => s.tipo === tipo && s.meses === mes)) {
                 const option = document.createElement("option");
                 option.value = `${tipo}|${mes}`;
                 option.textContent = `${tipo} (${mes}m)`;
@@ -1229,15 +838,13 @@ function renderizarOpcionesSeguro() {
 }
 
 document.getElementById("agregar-garex").addEventListener("change", function() {
-    const container = document.getElementById("garex-selector-container");
-    container.style.display = this.checked ? "block" : "none";
+    document.getElementById("garex-selector-container").style.display = this.checked ? "block" : "none";
     if (!this.checked) document.getElementById("garex-select").value = "";
     actualizarResumen();
 });
 
 document.getElementById("agregar-seguro").addEventListener("change", function() {
-    const container = document.getElementById("seguro-selector-container");
-    container.style.display = this.checked ? "block" : "none";
+    document.getElementById("seguro-selector-container").style.display = this.checked ? "block" : "none";
     if (!this.checked) document.getElementById("seguro-select").value = "";
     actualizarResumen();
 });
@@ -1246,100 +853,34 @@ function obtenerCostoGarex(precio, meses) {
     let llave = (dispositivoActual === "iPhone") ? "iPhone" : "Otros";
     let configuracion = dbGarex[llave].find(g => g.mesesAdic == meses);
     if(!configuracion) return 0;
-    
     let rango = configuracion.rangos.find(r => precio <= r.hasta);
     return rango ? rango.costo : configuracion.rangos[configuracion.rangos.length - 1].costo;
 }
 
 function obtenerCostoSeguro(precio, tipo, meses) {
     if(!dbSeguros[dispositivoActual]) return 0;
-    
     let configuracion = dbSeguros[dispositivoActual].find(s => s.tipo === tipo && s.meses == meses);
     if(!configuracion) return 0;
-
     let rango = configuracion.rangos.find(r => precio <= r.hasta);
     return rango ? rango.c : configuracion.rangos[configuracion.rangos.length - 1].c;
 }
 
-function abrirModal() {
-    document.getElementById("modal-accesorio").classList.add("activo");
-}
-
-function cerrarModal() {
-    document.getElementById("modal-accesorio").classList.remove("activo");
-    document.getElementById("select-accesorio").value = "";
-    document.getElementById("custom-precio").value = "";
-    document.getElementById("custom-cantidad").value = "1";
-}
-
-function agregarAccesorioDesdeModal() {
-    const nombre = document.getElementById("select-accesorio").value;
-    const precio = parseFloat(document.getElementById("custom-precio").value);
-    const cantidad = parseInt(document.getElementById("custom-cantidad").value);
-    
-    if (!nombre || !precio || precio < 0 || !cantidad || cantidad < 1) {
-        alert("Por favor completa todos los campos correctamente");
-        return;
-    }
-    
-    const existe = accesoriosSeleccionados.find(a => a.nombre === nombre && a.precio === precio);
-    if (existe) {
-        existe.cantidad += cantidad;
-    } else {
-        accesoriosSeleccionados.push({ nombre, precio, cantidad });
-    }
-    
-    renderizarSeleccionados();
-    actualizarResumen();
-    cerrarModal();
-}
-
-function renderizarSeleccionados() {
-    const container = document.getElementById("accesorios-seleccionados");
-    if (accesoriosSeleccionados.length === 0) {
-        container.innerHTML = '<p style="color: #86868b; text-align: center;">No hay accesorios seleccionados</p>';
-        return;
-    }
-
-    container.innerHTML = "";
-    accesoriosSeleccionados.forEach((acc, index) => {
-        const div = document.createElement("div");
-        div.className = "accesorio-item";
-        div.innerHTML = `
-            <div class="accesorio-info">
-                <div class="accesorio-nombre">${acc.nombre}</div>
-                <div class="accesorio-precio">$${acc.precio.toFixed(2)} c/u</div>
-            </div>
-            <div class="accesorio-cantidad">
-                <input type="number" value="${acc.cantidad}" min="1" onchange="modificarCantidad(${index}, this.value)">
-                <button class="btn-eliminar" onclick="eliminarAccesorio(${index})">✕</button>
-            </div>
-        `;
-        container.appendChild(div);
-    });
-}
-
-function modificarCantidad(index, cantidad) {
-    accesoriosSeleccionados[index].cantidad = parseInt(cantidad) || 1;
-    renderizarSeleccionados();
-    actualizarResumen();
-}
-
-function eliminarAccesorio(index) {
-    accesoriosSeleccionados.splice(index, 1);
-    renderizarSeleccionados();
-    actualizarResumen();
-}
-
+// CÁLCULO GENERAL DE LA CUOTA Y DESGLOSE
 function actualizarResumen() {
     const formatoUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
     const formatoCRC = new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC' });
     
     let precioDispositivo = parseFloat(document.getElementById("precio-dispositivo").value) || 0;
-    let tipoCambio = parseFloat(document.getElementById("tipo-cambio").value) || 455.50;
+    let tipoCambio = parseFloat(document.getElementById("tipo-cambio").value) || 455.00;
     
+    // Suma accesorios fijos asignados
     let subtotalAccesorios = 0;
-    accesoriosSeleccionados.forEach(acc => {
+    accesoriosFijos.forEach(acc => {
+        subtotalAccesorios += acc.precio * acc.cantidad;
+    });
+
+    // Suma accesorios adicionales
+    accesoriosAdicionales.forEach(acc => {
         subtotalAccesorios += acc.precio * acc.cantidad;
     });
     
@@ -1360,7 +901,7 @@ function actualizarResumen() {
     
     let prima = parseFloat(document.getElementById("prima").value) || 0;
     let tradein = parseFloat(document.getElementById("tradein").value) || 0;
-    let meses = parseInt(document.getElementById("meses").value) || 24;
+    let meses = parseInt(document.getElementById("meses").value) || 12;
     
     let totalUSD = precioDispositivo + subtotalAccesorios + costoGarex + costoSeguro - prima - tradein;
     totalUSD = Math.max(0, totalUSD);
@@ -1390,9 +931,8 @@ document.getElementById("modal-accesorio").addEventListener("click", function(e)
     if (e.target === this) cerrarModal();
 });
 
-// Inicializar de forma consistente
-renderizarAccesorios();
-renderizarSelectAccesorios();
+// Inicialización consistente
+renderizarAccesoriosFijos();
 renderizarOpcionesGarex();
 renderizarOpcionesSeguro();
 actualizarResumen();
