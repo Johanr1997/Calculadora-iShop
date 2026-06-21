@@ -737,7 +737,7 @@ function cambiarPrecioFijo(id, valor) {
 
 function cambiarCantidadFijo(id, valor) {
     const acc = accesoriosFijos.find(a => a.id === id);
-    if (acc) acc.cantidad = parseInt(valor) || 1;
+    if (acc) acc.cantidad = parseInt(valor) || 0;
     actualizarResumen();
 }
 
