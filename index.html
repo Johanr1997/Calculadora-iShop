@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Configurador de Accesorios - iShop</title>
+<title>Calculadora de Cuota - iShop</title>
 
 <style>
 /* ESTILO BLANCO MINIMALISTA DE APPLE */
@@ -838,8 +838,8 @@ button:active {
 
 <div class="main-container">
     <div class="container">
-        <h2>Configurador de Accesorios</h2>
-        <p class="subtitle">Elige tu dispositivo y los accesorios que deseas.</p>
+        <h2>Calculador de Cuota</h2>
+        <p class="subtitle">Elige el dispositivo y los accesorios.</p>
 
         <div class="form-group">
             <label>Dispositivo</label>
@@ -1336,7 +1336,7 @@ function actualizarResumen() {
     const formatoCRC = new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC' });
     
     let precioDispositivo = parseFloat(document.getElementById("precio-dispositivo").value) || 0;
-    let tipoCambio = parseFloat(document.getElementById("tipo-cambio").value) || 455;
+    let tipoCambio = parseFloat(document.getElementById("tipo-cambio").value) || 455.50;
     
     let subtotalAccesorios = 0;
     accesoriosSeleccionados.forEach(acc => {
