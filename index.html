@@ -80,7 +80,6 @@ label {
     margin-bottom: 6px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    text-align: center;
 }
 
 select, input[type="number"], input[type="text"] {
@@ -235,11 +234,10 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
     font-size: 14px;
     font-weight: 500;
     color: #1d1d1f;
-    text-transform: none;
-    letter-spacing: normal;
     cursor: pointer;
     margin-bottom: 0;
     text-transform: none;
+    letter-spacing: normal;
 }
 
 .agregado-selector {
@@ -773,7 +771,8 @@ button:active {
         border-color: #3a3a3c;
     }
 
-    .accesorio-nome {
+    /* CORREGIDO MEDIANTE TU INTEGRACIÓN COLEGIAL */
+    .accesorio-nombre {
         color: #ffffff;
     }
 
@@ -837,57 +836,50 @@ button:active {
 <body>
 
 <div class="main-container">
-    <!-- PANEL PRINCIPAL -->
     <div class="container">
         <h2>Configurador de Accesorios</h2>
         <p class="subtitle">Elige tu dispositivo y los accesorios que deseas.</p>
 
-        <!-- SELECTOR DE DISPOSITIVOS CON PRECIO -->
         <div class="form-group">
             <label>Dispositivo</label>
             <div class="dispositivos-grid">
-                <div class="dispositivo-card activo" onclick="cambiarDispositivo('iPhone', 0)">
+                <div class="dispositivo-card activo" onclick="cambiarDispositivo(event, 'iPhone', 0)">
                     <span class="dispositivo-nombre">iPhone</span>
                     <span class="dispositivo-precio" id="precio-iPhone">Base: $0.00</span>
                 </div>
-                <div class="dispositivo-card" onclick="cambiarDispositivo('MacBook', 0)">
+                <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'MacBook', 0)">
                     <span class="dispositivo-nombre">Mac</span>
                     <span class="dispositivo-precio" id="precio-MacBook">Base: $0.00</span>
                 </div>
-                <div class="dispositivo-card" onclick="cambiarDispositivo('iPad', 0)">
+                <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'iPad', 0)">
                     <span class="dispositivo-nombre">iPad</span>
                     <span class="dispositivo-precio" id="precio-iPad">Base: $0.00</span>
                 </div>
-                <div class="dispositivo-card" onclick="cambiarDispositivo('Watch', 0)">
+                <div class="dispositivo-card" onclick="cambiarDispositivo(event, 'Watch', 0)">
                     <span class="dispositivo-nombre">Apple Watch</span>
                     <span class="dispositivo-precio" id="precio-Watch">Base: $0.00</span>
                 </div>
             </div>
         </div>
 
-        <!-- PRECIO DEL DISPOSITIVO -->
         <div class="form-group">
             <label>Precio del Dispositivo Base ($)</label>
             <input type="number" id="precio-dispositivo" placeholder="0.00" step="0.01" min="0" onchange="actualizarPrecioDispositivo()">
         </div>
 
-        <!-- ACCESORIOS DISPONIBLES -->
         <div class="form-group">
             <label>Agregar Accesorios</label>
             <div id="accesorios-disponibles"></div>
         </div>
 
-        <!-- ACCESORIOS SELECCIONADOS -->
         <div class="form-group">
             <label>Accesorios en tu Carrito</label>
             <div id="accesorios-seleccionados" class="accesorios-container"></div>
         </div>
 
-        <!-- GARANTÍA Y SEGURO -->
         <div class="form-group">
             <label style="margin-bottom: 12px;">Agregados</label>
             
-            <!-- GAREX -->
             <div class="checkbox-group">
                 <input type="checkbox" id="agregar-garex" onchange="actualizarResumen()">
                 <label for="agregar-garex">Garantía Garex</label>
@@ -899,7 +891,6 @@ button:active {
                 <span class="agregado-costo" id="costo-garex-display">+$0.00</span>
             </div>
             
-            <!-- SEGURO -->
             <div class="checkbox-group">
                 <input type="checkbox" id="agregar-seguro" onchange="actualizarResumen()">
                 <label for="agregar-seguro">Seguro iShop</label>
@@ -912,7 +903,6 @@ button:active {
             </div>
         </div>
 
-        <!-- AJUSTES FINALES -->
         <div class="form-inline">
             <div class="form-group">
                 <label>Prima ($)</label>
@@ -931,11 +921,9 @@ button:active {
 
     </div>
 
-    <!-- PANEL RESUMEN -->
     <div class="container resumen">
         <h2 style="font-size: 20px;">Resumen</h2>
 
-        <!-- TIPO DE CAMBIO -->
         <div class="tipo-cambio-info">
             <label>Tipo de Cambio (USD/CRC)</label>
             <div class="tipo-cambio-input">
@@ -944,7 +932,6 @@ button:active {
             <p style="font-size: 11px; color: #86868b; margin-top: 6px; margin-bottom: 0;">Edita el valor según necesites</p>
         </div>
 
-        <!-- DESGLOSE -->
         <div class="resumen-item">
             <span>Dispositivo:</span>
             <span id="precio-dispositivo-display" class="precio-moneda">$0.00</span>
@@ -1002,7 +989,6 @@ button:active {
     </div>
 </div>
 
-<!-- MODAL PARA AGREGAR ACCESORIO -->
 <div id="modal-accesorio" class="modal">
     <div class="modal-content">
         <h3>Agregar Accesorio</h3>
@@ -1098,7 +1084,7 @@ const dbSeguros = {
         { tipo: "Robo y Hurto", meses: 24, rangos: [{ hasta: 450, c: 65 }, { hasta: 650, c: 105 }, { hasta: 900, c: 140 }, { hasta: 1250, c: 150 }, { hasta: 1625, c: 220 }, { hasta: 2000, c: 280 }, { hasta: 2375, c: 340 }, { hasta: 3000, c: 410 }] },
         { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 450, c: 80 }, { hasta: 650, c: 130 }, { hasta: 900, c: 185 }, { hasta: 1250, c: 195 }, { hasta: 1625, c: 280 }, { hasta: 2000, c: 355 }, { hasta: 2375, c: 430 }, { hasta: 3000, c: 520 }] },
         { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 450, c: 115 }, { hasta: 650, c: 180 }, { hasta: 900, c: 255 }, { hasta: 1250, c: 275 }, { hasta: 1625, c: 395 }, { hasta: 2000, c: 495 }, { hasta: 2375, c: 600 }, { hasta: 3000, c: 730 }] },
-        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 450, c: 130 }, { hasta: 650, c: 205 }, { hasta: 900, c: 290 }, { hasta: 1250, c: 310 }, { hasta: 1625, c: 450 }, { hasta: 2000, c: 565 }, { hasta: 2375, c: 690 }, { hasta: 3000, c: 835 }] }
+        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 450, c: 130 }, { hasta: 650, c: 205 }, { hasta: 900, c: 290 }, { hasta: 1250, c: 310 }, { hasta: 450, c: 450 }, { hasta: 2000, c: 565 }, { hasta: 2375, c: 690 }, { hasta: 3000, c: 835 }] }
     ],
     "MacBook": [
         { tipo: "Accidental", meses: 12, rangos: [{ hasta: 800, c: 45 }, { hasta: 1000, c: 60 }, { hasta: 1500, c: 75 }, { hasta: 2000, c: 130 }, { hasta: 2500, c: 155 }, { hasta: 4250, c: 195 }, { hasta: 5000, c: 280 }, { hasta: 6250, c: 340 }] },
@@ -1113,7 +1099,7 @@ const dbSeguros = {
         { tipo: "Robo y Hurto", meses: 18, rangos: [{ hasta: 450, c: 35 }, { hasta: 650, c: 55 }, { hasta: 900, c: 75 }, { hasta: 1250, c: 90 }, { hasta: 1625, c: 116 }, { hasta: 2000, c: 145 }, { hasta: 2375, c: 175 }, { hasta: 2625, c: 200 }, { hasta: 2875, c: 220 }, { hasta: 3125, c: 240 }, { hasta: 3500, c: 265 }, { hasta: 3875, c: 295 }, { hasta: 5000, c: 400 }] },
         { tipo: "Robo y Hurto", meses: 24, rangos: [{ hasta: 450, c: 40 }, { hasta: 650, c: 60 }, { hasta: 900, c: 85 }, { hasta: 1250, c: 100 }, { hasta: 1625, c: 135 }, { hasta: 2000, c: 170 }, { hasta: 2375, c: 200 }, { hasta: 2625, c: 230 }, { hasta: 2875, c: 255 }, { hasta: 3125, c: 275 }, { hasta: 3500, c: 305 }, { hasta: 3875, c: 340 }, { hasta: 5000, c: 455 }] },
         { tipo: "Servicio Robo", meses: 12, rangos: [{ hasta: 450, c: 50 }, { hasta: 650, c: 80 }, { hasta: 900, c: 110 }, { hasta: 1250, c: 130 }, { hasta: 1625, c: 170 }, { hasta: 2000, c: 210 }, { hasta: 2375, c: 260 }, { hasta: 2625, c: 295 }, { hasta: 2875, c: 325 }, { hasta: 3125, c: 350 }, { hasta: 3500, c: 390 }, { hasta: 3875, c: 435 }, { hasta: 5000, c: 570 }] },
-        { tipo: "Servicio Robo", meses: 18, rangos: [{ hasta: 450, c: 70 }, { hasta: 650, c: 110 }, { hasta: 900, c: 155 }, { hasta: 1250, c: 185 }, { hasta: 1625, c: 235 }, { hasta: 2000, c: 300 }, { hasta: 2375, c: 360 }, { hasta: 2625, c: 410 }, { hasta: 2875, c: 450 }, { hasta: 3125, c: 495 }, { hasta: 3500, c: 545 }, { hasta: 3875, c: 605 }, { hasta: 5000, c: 800 }] },
+        { tipo: "Servicio Robo", meses: 18, rangos: [{ hasta: 450, c: 70 }, { hasta: 650, c: 110 }, { hasta: 900, c: 155 }, { hasta: 1250, c: 185 }, { hasta: 2375, c: 235 }, { hasta: 2000, c: 300 }, { hasta: 2375, c: 360 }, { hasta: 2625, c: 410 }, { hasta: 2875, c: 450 }, { hasta: 3125, c: 495 }, { hasta: 3500, c: 545 }, { hasta: 3875, c: 605 }, { hasta: 5000, c: 800 }] },
         { tipo: "Servicio Robo", meses: 24, rangos: [{ hasta: 450, c: 80 }, { hasta: 650, c: 125 }, { hasta: 900, c: 175 }, { hasta: 1250, c: 210 }, { hasta: 1625, c: 270 }, { hasta: 2000, c: 340 }, { hasta: 2375, c: 410 }, { hasta: 2625, c: 470 }, { hasta: 2875, c: 515 }, { hasta: 3125, c: 565 }, { hasta: 3500, c: 620 }, { hasta: 3875, c: 690 }, { hasta: 5000, c: 915 }] }
     ],
     "Watch": [
@@ -1130,14 +1116,26 @@ const dbSeguros = {
 let dispositivoActual = "iPhone";
 let accesoriosSeleccionados = [];
 
-// CAMBIAR DISPOSITIVO
-function cambiarDispositivo(dispositivo, precio) {
+// FUNCIÓN INTEGRADA CORREGIDA COMPLETA
+function cambiarDispositivo(event, dispositivo, precio) {
     dispositivoActual = dispositivo;
-    document.querySelectorAll(".dispositivo-card").forEach(card => card.classList.remove("activo"));
+
+    // Quitar selección previa
+    document.querySelectorAll(".dispositivo-card")
+        .forEach(card => card.classList.remove("activo"));
+
+    // Activar seleccionado correctamente
     event.target.closest(".dispositivo-card").classList.add("activo");
-    
+
+    // Resetear precio
     document.getElementById("precio-dispositivo").value = precio || "";
-    
+
+    // LIMPIAR ACCESORIOS (MEJORA CLAVE)
+    accesoriosSeleccionados = [];
+    renderizarSeleccionados();
+
+    // Re-render
+    renderizarAccesorios();
     renderizarSelectAccesorios();
     renderizarOpcionesGarex();
     renderizarOpcionesSeguro();
@@ -1149,9 +1147,7 @@ function actualizarPrecioDispositivo() {
     const precio = parseFloat(document.getElementById("precio-dispositivo").value) || 0;
     const formatoUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
     
-    // Actualizar el display del dispositivo activo
     document.getElementById(`precio-${dispositivoActual}`).textContent = `Base: ${formatoUSD.format(precio)}`;
-    
     actualizarResumen();
 }
 
@@ -1191,18 +1187,10 @@ function renderizarAccesorios() {
 
 // RENDERIZAR OPCIONES GAREX
 function renderizarOpcionesGarex() {
-    const checkbox = document.getElementById("agregar-garex");
-    const container = document.getElementById("garex-selector-container");
     const select = document.getElementById("garex-select");
-    
     select.innerHTML = '<option value="">Selecciona plazo</option>';
     
-    let opciones = [];
-    if (dispositivoActual === "iPhone") {
-        opciones = dbGarex["iPhone"];
-    } else {
-        opciones = dbGarex["Otros"];
-    }
+    let opciones = (dispositivoActual === "iPhone") ? dbGarex["iPhone"] : dbGarex["Otros"];
     
     opciones.forEach(opt => {
         const option = document.createElement("option");
@@ -1219,18 +1207,13 @@ function renderizarOpcionesSeguro() {
     
     if (!dbSeguros[dispositivoActual]) return;
     
-    // Obtener tipos de seguro únicos para este dispositivo
     const tipos = [];
     dbSeguros[dispositivoActual].forEach(seg => {
-        if (!tipos.includes(seg.tipo)) {
-            tipos.push(seg.tipo);
-        }
+        if (!tipos.includes(seg.tipo)) tipos.push(seg.tipo);
     });
     
-    // Obtener meses únicos
     const meses = [...new Set(dbSeguros[dispositivoActual].map(s => s.meses))].sort((a, b) => a - b);
     
-    // Crear opciones combinadas
     tipos.forEach(tipo => {
         meses.forEach(mes => {
             const existe = dbSeguros[dispositivoActual].find(s => s.tipo === tipo && s.meses === mes);
@@ -1244,38 +1227,29 @@ function renderizarOpcionesSeguro() {
     });
 }
 
-// MANEJAR CHECKBOX GAREX
 document.getElementById("agregar-garex").addEventListener("change", function() {
     const container = document.getElementById("garex-selector-container");
     container.style.display = this.checked ? "block" : "none";
-    if (!this.checked) {
-        document.getElementById("garex-select").value = "";
-    }
+    if (!this.checked) document.getElementById("garex-select").value = "";
     actualizarResumen();
 });
 
-// MANEJAR CHECKBOX SEGURO
 document.getElementById("agregar-seguro").addEventListener("change", function() {
     const container = document.getElementById("seguro-selector-container");
     container.style.display = this.checked ? "block" : "none";
-    if (!this.checked) {
-        document.getElementById("seguro-select").value = "";
-    }
+    if (!this.checked) document.getElementById("seguro-select").value = "";
     actualizarResumen();
 });
 
-// OBTENER COSTO GAREX
 function obtenerCostoGarex(precio, meses) {
     let llave = (dispositivoActual === "iPhone") ? "iPhone" : "Otros";
     let configuracion = dbGarex[llave].find(g => g.mesesAdic == meses);
-    
     if(!configuracion) return 0;
     
     let rango = configuracion.rangos.find(r => precio <= r.hasta);
     return rango ? rango.costo : configuracion.rangos[configuracion.rangos.length - 1].costo;
 }
 
-// OBTENER COSTO SEGURO
 function obtenerCostoSeguro(precio, tipo, meses) {
     if(!dbSeguros[dispositivoActual]) return 0;
     
@@ -1286,12 +1260,10 @@ function obtenerCostoSeguro(precio, tipo, meses) {
     return rango ? rango.c : configuracion.rangos[configuracion.rangos.length - 1].c;
 }
 
-// ABRIR MODAL
 function abrirModal() {
     document.getElementById("modal-accesorio").classList.add("activo");
 }
 
-// CERRAR MODAL
 function cerrarModal() {
     document.getElementById("modal-accesorio").classList.remove("activo");
     document.getElementById("select-accesorio").value = "";
@@ -1299,7 +1271,6 @@ function cerrarModal() {
     document.getElementById("custom-cantidad").value = "1";
 }
 
-// AGREGAR ACCESORIO DESDE MODAL
 function agregarAccesorioDesdeModal() {
     const nombre = document.getElementById("select-accesorio").value;
     const precio = parseFloat(document.getElementById("custom-precio").value);
@@ -1311,7 +1282,6 @@ function agregarAccesorioDesdeModal() {
     }
     
     const existe = accesoriosSeleccionados.find(a => a.nombre === nombre && a.precio === precio);
-    
     if (existe) {
         existe.cantidad += cantidad;
     } else {
@@ -1323,17 +1293,14 @@ function agregarAccesorioDesdeModal() {
     cerrarModal();
 }
 
-// RENDERIZAR ACCESORIOS SELECCIONADOS
 function renderizarSeleccionados() {
     const container = document.getElementById("accesorios-seleccionados");
-    
     if (accesoriosSeleccionados.length === 0) {
         container.innerHTML = '<p style="color: #86868b; text-align: center;">No hay accesorios seleccionados</p>';
         return;
     }
 
     container.innerHTML = "";
-    
     accesoriosSeleccionados.forEach((acc, index) => {
         const div = document.createElement("div");
         div.className = "accesorio-item";
@@ -1351,42 +1318,34 @@ function renderizarSeleccionados() {
     });
 }
 
-// MODIFICAR CANTIDAD
 function modificarCantidad(index, cantidad) {
     accesoriosSeleccionados[index].cantidad = parseInt(cantidad) || 1;
     renderizarSeleccionados();
     actualizarResumen();
 }
 
-// ELIMINAR ACCESORIO
 function eliminarAccesorio(index) {
     accesoriosSeleccionados.splice(index, 1);
     renderizarSeleccionados();
     actualizarResumen();
 }
 
-// ACTUALIZAR RESUMEN
 function actualizarResumen() {
     const formatoUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
     const formatoCRC = new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC' });
     
-    // Obtener valores
     let precioDispositivo = parseFloat(document.getElementById("precio-dispositivo").value) || 0;
     let tipoCambio = parseFloat(document.getElementById("tipo-cambio").value) || 455;
     
-    // Calcular subtotal de accesorios
     let subtotalAccesorios = 0;
     accesoriosSeleccionados.forEach(acc => {
         subtotalAccesorios += acc.precio * acc.cantidad;
     });
     
-    // Calcular costos de Garex y Seguro
     let costoGarex = 0;
     if (document.getElementById("agregar-garex").checked) {
         const mesesGarex = document.getElementById("garex-select").value;
-        if (mesesGarex) {
-            costoGarex = obtenerCostoGarex(precioDispositivo, mesesGarex);
-        }
+        if (mesesGarex) costoGarex = obtenerCostoGarex(precioDispositivo, mesesGarex);
     }
     
     let costoSeguro = 0;
@@ -1402,18 +1361,13 @@ function actualizarResumen() {
     let tradein = parseFloat(document.getElementById("tradein").value) || 0;
     let meses = parseInt(document.getElementById("meses").value) || 24;
     
-    // Total en USD - PRIMA SE RESTA
     let totalUSD = precioDispositivo + subtotalAccesorios + costoGarex + costoSeguro - prima - tradein;
-    totalUSD = Math.max(0, totalUSD); // No permitir negativos
+    totalUSD = Math.max(0, totalUSD);
     
-    // Total en CRC
     let totalCRC = totalUSD * tipoCambio;
-    
-    // Cuota mensual
     let cuotaUSD = totalUSD / meses;
     let cuotaCRC = totalCRC / meses;
     
-    // Actualizar display
     document.getElementById("precio-dispositivo-display").textContent = formatoUSD.format(precioDispositivo);
     document.getElementById("subtotal-accesorios").textContent = formatoUSD.format(subtotalAccesorios);
     document.getElementById("costo-garex-total").textContent = formatoUSD.format(costoGarex);
@@ -1421,7 +1375,6 @@ function actualizarResumen() {
     document.getElementById("prima-display").textContent = `-${formatoUSD.format(prima)}`;
     document.getElementById("tradein-display").textContent = `-${formatoUSD.format(tradein)}`;
     
-    // Actualizar display de costos en los checkboxes
     document.getElementById("costo-garex-display").textContent = `+${formatoUSD.format(costoGarex)}`;
     document.getElementById("costo-seguro-display").textContent = `+${formatoUSD.format(costoSeguro)}`;
     
@@ -1432,12 +1385,11 @@ function actualizarResumen() {
     document.getElementById("cuota-crc").textContent = formatoCRC.format(cuotaCRC);
 }
 
-// Cerrar modal al hacer clic fuera
 document.getElementById("modal-accesorio").addEventListener("click", function(e) {
     if (e.target === this) cerrarModal();
 });
 
-// Inicializar
+// Inicializar de forma consistente
 renderizarAccesorios();
 renderizarSelectAccesorios();
 renderizarOpcionesGarex();
