@@ -6,16 +6,64 @@
 <title>Calculadora de Cuotas - iShop</title>
 
 <style>
-/* ESTITO BLANCO MINIMALISTA DE APPLE */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #f5f5f7;
-    color: #1d1d1f;
-    padding: 20px;
+/* ═══════════════════════════════════════════
+   ESTILO LIQUID GLASS — consistente con Control de Ventas iShop
+   ═══════════════════════════════════════════ */
+* {
     margin: 0;
-    min-height: 100vh;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
 }
+
+body {
+    background: #F5F5F7;
+    color: #1D1D1F;
+    min-height: 100vh;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ORBES DE COLOR DE FONDO */
+.s-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.6;
+    z-index: 0;
+    pointer-events: none;
+}
+.s-orb-blue   { width: 380px; height: 380px; background: rgba(147,197,253,0.7); top: -80px; left: -100px; }
+.s-orb-orange { width: 320px; height: 320px; background: rgba(253,186,116,0.55); bottom: -100px; right: -80px; }
+
+/* BOTÓN DE MODO OSCURO */
+.theme-toggle-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.85);
+    box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1001;
+    color: #1D1D1F;
+    margin: 0;
+    padding: 0;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+.theme-toggle-btn:hover { transform: scale(1.06); background: rgba(255,255,255,0.55); }
 
 .main-container {
     max-width: 1200px;
@@ -23,15 +71,34 @@ body {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 24px;
+    position: relative;
+    z-index: 1;
 }
 
+/* TARJETAS LIQUID GLASS */
 .container {
-    background: #ffffff;
-    padding: 35px 28px;
-    border-radius: 20px;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.85);
+    padding: 32px 28px;
+    border-radius: 22px;
     box-sizing: border-box;
-    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.04);
-    border: 1px solid #d2d2d7;
+    box-shadow:
+        0 2px 20px rgba(0,0,0,0.06),
+        inset 0 1px 0 rgba(255,255,255,0.92);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Reflejo especular sutil, como el resto de la app */
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 10%; right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.9) 60%, transparent);
+    pointer-events: none;
 }
 
 .container.resumen {
@@ -41,30 +108,38 @@ body {
 }
 
 h2 {
-    font-size: 26px;
-    font-weight: 600;
+    font-size: 24px;
+    font-weight: 700;
     letter-spacing: -0.022em;
     margin-top: 0;
     margin-bottom: 8px;
-    color: #1d1d1f;
+    color: #1D1D1F;
+    position: relative;
+    z-index: 1;
 }
 
 p.subtitle {
-    color: #86868b;
-    font-size: 14px;
+    color: #86868B;
+    font-size: 13px;
     margin-bottom: 24px;
     margin-top: 0;
+    position: relative;
+    z-index: 1;
 }
 
 .form-group {
     text-align: left;
     margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
 }
 
 .form-inline {
     display: flex;
     gap: 12px;
     margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
 }
 
 .form-inline .form-group {
@@ -74,31 +149,32 @@ p.subtitle {
 
 label {
     display: block;
-    font-size: 11px;
-    font-weight: 600;
-    color: #86868b;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(0,0,0,0.4);
     margin-bottom: 6px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    text-align: center;
+    letter-spacing: 0.06em;
+    text-align: left;
 }
 
 select, input[type="number"], input[type="text"] {
     width: 100%;
-    padding: 12px;
+    padding: 12px 14px;
     border-radius: 12px;
-    border: 1px solid #d2d2d7;
-    background: #ffffff;
-    color: #1d1d1f;
+    border: 1px solid rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.6);
+    color: #1D1D1F;
     font-size: 14px;
     font-weight: 400;
     box-sizing: border-box;
     outline: none;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 select:focus, input[type="number"]:focus, input[type="text"]:focus {
-    border-color: #E86518;
+    border-color: #0071E3;
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.15);
 }
 
 /* DISPOSITIVOS SELECTOR CON PRECIO */
@@ -111,30 +187,31 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
 
 .dispositivo-card {
     padding: 14px;
-    border-radius: 12px;
-    border: 2px solid #d2d2d7;
-    background: #ffffff;
+    border-radius: 14px;
+    border: 2px solid rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.55);
     cursor: pointer;
     font-weight: 500;
     font-size: 13px;
     transition: all 0.2s ease;
-    color: #1d1d1f;
+    color: #1D1D1F;
     text-align: left;
 }
 
 .dispositivo-card:hover {
-    border-color: #E86518;
+    border-color: #0071E3;
 }
 
 .dispositivo-card.activo {
-    background: #E86518;
+    background: #0071E3;
     color: #ffffff;
-    border-color: #E86518;
+    border-color: #0071E3;
+    box-shadow: 0 4px 16px rgba(0,113,227,0.3);
 }
 
 .dispositivo-nombre {
     display: block;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 4px;
 }
 
@@ -150,9 +227,9 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
 }
 
 .accesorio-item {
-    background: #f5f5f7;
-    border: 1px solid #e8e8ed;
-    border-radius: 12px;
+    background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.85);
+    border-radius: 14px;
     padding: 12px;
     margin-bottom: 12px;
     display: flex;
@@ -168,7 +245,7 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
 .accesorio-nombre {
     font-weight: 600;
     font-size: 14px;
-    color: #1d1d1f;
+    color: #1D1D1F;
 }
 
 .accesorio-inputs {
@@ -195,12 +272,12 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
     text-align: center;
     padding: 8px;
     border-radius: 8px;
-    border: 1px solid #d2d2d7;
+    border: 1px solid rgba(255,255,255,0.9);
     font-size: 13px;
 }
 
 .btn-eliminar {
-    background: #ff3b30;
+    background: #FF3B30;
     color: white;
     border: none;
     border-radius: 8px;
@@ -209,10 +286,12 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
     font-size: 12px;
     font-weight: 600;
     transition: background 0.2s ease;
+    width: auto;
+    margin-top: 0;
 }
 
 .btn-eliminar:hover {
-    background: #ff453a;
+    background: #FF453A;
 }
 
 /* CHECKBOX GROUP */
@@ -221,19 +300,22 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
     align-items: center;
     gap: 10px;
     margin-bottom: 12px;
-    padding: 10px;
-    background: #f5f5f7;
-    border-radius: 12px;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.85);
+    border-radius: 14px;
     cursor: pointer;
     user-select: none;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
 }
 
 .checkbox-group input {
     width: 18px;
     height: 18px;
     cursor: pointer;
-    accent-color: #E86518;
+    accent-color: #0071E3;
     flex-shrink: 0;
 }
 
@@ -241,7 +323,7 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
     display: inline;
     font-size: 14px;
     font-weight: 500;
-    color: #1d1d1f;
+    color: #1D1D1F;
     cursor: pointer;
     margin-bottom: 0;
     text-transform: none;
@@ -260,32 +342,33 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
 
 .agregado-costo {
     font-size: 12px;
-    color: #E86518;
-    font-weight: 600;
+    color: #0071E3;
+    font-weight: 700;
     flex-shrink: 0;
 }
 
 /* BOTONES */
 button {
-    background: #E86518;
+    background: #0071E3;
     color: #ffffff;
     border: none;
     width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    font-size: 15px;
+    padding: 13px;
+    border-radius: 999px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     margin-top: 10px;
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
 button:hover {
-    background: #d65914;
+    background: #0077ED;
 }
 
 button:active {
-    background: #C55414;
+    background: #0062C4;
+    transform: scale(0.98);
 }
 
 /* RESUMEN LATERAL */
@@ -293,17 +376,19 @@ button:active {
     display: flex;
     justify-content: space-between;
     font-size: 13px;
-    color: #6e6e73;
+    color: #6E6E73;
     margin-bottom: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #e8e8ed;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 1;
 }
 
 .resumen-item.total {
     font-size: 16px;
-    font-weight: 600;
-    color: #1d1d1f;
-    border-bottom: 2px solid #d2d2d7;
+    font-weight: 700;
+    color: #1D1D1F;
+    border-bottom: 2px solid rgba(0,0,0,0.1);
     padding-bottom: 12px;
     margin-bottom: 12px;
 }
@@ -313,11 +398,14 @@ button:active {
 }
 
 .tipo-cambio-info {
-    background: #f5f5f7;
-    border-radius: 12px;
-    padding: 12px;
+    background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.85);
+    border-radius: 14px;
+    padding: 12px 14px;
     margin-bottom: 16px;
     font-size: 12px;
+    position: relative;
+    z-index: 1;
 }
 
 .tipo-cambio-info label {
@@ -334,7 +422,6 @@ button:active {
     flex: 1;
     padding: 8px;
     border-radius: 8px;
-    border: 1px solid #d2d2d7;
     font-size: 13px;
 }
 
@@ -342,6 +429,8 @@ button:active {
     margin-top: 20px;
     display: flex;
     justify-content: center;
+    position: relative;
+    z-index: 1;
 }
 
 .logo-final img {
@@ -351,7 +440,7 @@ button:active {
     transition: opacity 0.2s ease;
 }
 
-/* MODAL */
+/* MODAL — mismo estilo "modal-glass" que el resto de la app */
 .modal {
     display: none;
     position: fixed;
@@ -359,7 +448,9 @@ button:active {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     z-index: 1000;
     align-items: center;
     justify-content: center;
@@ -370,16 +461,23 @@ button:active {
 }
 
 .modal-content {
-    background: white;
-    border-radius: 20px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.9);
+    border-radius: 22px;
     padding: 30px;
     max-width: 400px;
     width: 90%;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
 }
 
 .modal-content h3 {
     margin-top: 0;
-    color: #1d1d1f;
+    margin-bottom: 18px;
+    color: #1D1D1F;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 /* RESPONSIVE MÓVIL OPTIMIZADO */
@@ -389,9 +487,9 @@ button:active {
 }
 
 @media (max-width: 768px) {
-    body { padding: 12px; }
-    .container { padding: 20px 16px; }
-    h2 { font-size: 22px; }
+    body { padding: 20px 12px; }
+    .container { padding: 24px 18px; }
+    h2 { font-size: 20px; }
     select, input[type="number"], input[type="text"] { padding: 14px; font-size: 16px; }
     .accesorio-item { flex-direction: column; align-items: flex-start; gap: 8px; }
     .accesorio-inputs { width: 100%; justify-content: space-between; }
@@ -399,25 +497,43 @@ button:active {
     .agregado-selector { width: 100%; }
 }
 
-@media (prefers-color-scheme: dark) {
-    body { background: #000000; color: #f5f5f7; }
-    .container { background: #1c1c1e; border-color: #2c2c2e; }
-    h2 { color: #ffffff; }
-    select, input[type="number"], input[type="text"] { background: #2c2c2e; border-color: #3a3a3c; color: #ffffff; }
-    .dispositivo-card { background: #2c2c2e; border-color: #3a3a3c; color: #ffffff; }
-    .accesorio-item { background: #2c2c2e; border-color: #3a3a3c; }
-    .accesorio-nombre { color: #ffffff; }
-    .checkbox-group { background: #2c2c2e; }
-    .checkbox-group label { color: #ffffff; }
-    .resumen-item { border-bottom-color: #3a3a3c; color: #86868b; }
-    .resumen-item.total { color: #ffffff; }
-    .tipo-cambio-info { background: #2c2c2e; }
-    .modal-content { background: #1c1c1e; color: #ffffff; }
-    .modal-content h3 { color: #ffffff; }
+/* MODO OSCURO — controlado por JS con la clase .dark-mode en <body>, igual que el resto de la app */
+body.dark-mode {
+    background: #000000;
+    color: #F2F2F7;
 }
+body.dark-mode .container,
+body.dark-mode .modal-content {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.12);
+}
+body.dark-mode h2,
+body.dark-mode .accesorio-nombre,
+body.dark-mode .checkbox-group label,
+body.dark-mode .resumen-item.total,
+body.dark-mode .modal-content h3 { color: #ffffff; }
+body.dark-mode label { color: rgba(255,255,255,0.5); }
+body.dark-mode select,
+body.dark-mode input[type="number"],
+body.dark-mode input[type="text"] {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+    color: #ffffff;
+}
+body.dark-mode .dispositivo-card { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: #ffffff; }
+body.dark-mode .dispositivo-card.activo { background: #0071E3; border-color: #0071E3; }
+body.dark-mode .accesorio-item,
+body.dark-mode .checkbox-group,
+body.dark-mode .tipo-cambio-info { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
+body.dark-mode .resumen-item { border-bottom-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+body.dark-mode .theme-toggle-btn { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); color: #ffffff; }
 </style>
 </head>
 <body>
+
+<div class="s-orb s-orb-blue"></div>
+<div class="s-orb s-orb-orange"></div>
+<button type="button" class="theme-toggle-btn" id="btnThemeToggleCalc" onclick="toggleModoOscuroCalc()" title="Cambiar tema">☽</button>
 
 <div class="main-container">
     <div class="container">
@@ -936,6 +1052,29 @@ renderizarAccesoriosFijos();
 renderizarOpcionesGarex();
 renderizarOpcionesSeguro();
 actualizarResumen();
+
+// ═══════════════════════════════════════════
+// MODO OSCURO — igual que el resto de la app: sigue el sistema por defecto,
+// y se puede alternar manualmente con el botón (se recuerda en localStorage)
+// ═══════════════════════════════════════════
+function aplicarModoOscuroCalc(activar) {
+    document.body.classList.toggle("dark-mode", activar);
+    const btn = document.getElementById("btnThemeToggleCalc");
+    if (btn) btn.textContent = activar ? "☼" : "☽";
+}
+
+function toggleModoOscuroCalc() {
+    const activar = !document.body.classList.contains("dark-mode");
+    localStorage.setItem("modoOscuroCalc", activar ? "1" : "0");
+    aplicarModoOscuroCalc(activar);
+}
+
+(function inicializarModoOscuroCalc() {
+    const guardado = localStorage.getItem("modoOscuroCalc");
+    const prefiereOscuro = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const activar = guardado !== null ? guardado === "1" : prefiereOscuro;
+    aplicarModoOscuroCalc(activar);
+})();
 </script>
 
 </body>
