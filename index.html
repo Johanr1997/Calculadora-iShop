@@ -40,30 +40,6 @@ body {
 .s-orb-orange { width: 320px; height: 320px; background: rgba(253,186,116,0.55); bottom: -100px; right: -80px; }
 
 /* BOTÓN DE MODO OSCURO */
-.theme-toggle-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.55);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.85);
-    box-shadow: 0 2px 14px rgba(0,0,0,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
-    z-index: 1001;
-    color: #1D1D1F;
-    margin: 0;
-    padding: 0;
-    transition: background 0.2s ease, transform 0.15s ease;
-}
-.theme-toggle-btn:hover { transform: scale(1.06); background: rgba(255,255,255,0.55); }
 
 .main-container {
     max-width: 1200px;
@@ -393,6 +369,15 @@ button:active {
     margin-bottom: 12px;
 }
 
+.total-crc-box {
+    background: #f5f5f7;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 0;
+    transition: background 0.3s ease;
+}
+
 .precio-moneda {
     font-weight: 600;
 }
@@ -497,43 +482,44 @@ button:active {
     .agregado-selector { width: 100%; }
 }
 
-/* MODO OSCURO — controlado por JS con la clase .dark-mode en <body>, igual que el resto de la app */
-body.dark-mode {
-    background: #000000;
-    color: #F2F2F7;
+/* MODO OSCURO — 100% automático vía CSS, sigue el tema del sistema operativo */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #000000;
+        color: #F2F2F7;
+    }
+    .container,
+    .modal-content {
+        background: rgba(255,255,255,0.06);
+        border-color: rgba(255,255,255,0.12);
+    }
+    h2,
+    .accesorio-nombre,
+    .checkbox-group label,
+    .resumen-item.total,
+    .modal-content h3 { color: #ffffff; }
+    label { color: rgba(255,255,255,0.5); }
+    select,
+    input[type="number"],
+    input[type="text"] {
+        background: rgba(255,255,255,0.08);
+        border-color: rgba(255,255,255,0.15);
+        color: #ffffff;
+    }
+    .dispositivo-card { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: #ffffff; }
+    .dispositivo-card.activo { background: #0071E3; border-color: #0071E3; }
+    .total-crc-box { background: rgba(255,255,255,0.08); }
+    .accesorio-item,
+    .checkbox-group,
+    .tipo-cambio-info { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
+    .resumen-item { border-bottom-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
 }
-body.dark-mode .container,
-body.dark-mode .modal-content {
-    background: rgba(255,255,255,0.06);
-    border-color: rgba(255,255,255,0.12);
-}
-body.dark-mode h2,
-body.dark-mode .accesorio-nombre,
-body.dark-mode .checkbox-group label,
-body.dark-mode .resumen-item.total,
-body.dark-mode .modal-content h3 { color: #ffffff; }
-body.dark-mode label { color: rgba(255,255,255,0.5); }
-body.dark-mode select,
-body.dark-mode input[type="number"],
-body.dark-mode input[type="text"] {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.15);
-    color: #ffffff;
-}
-body.dark-mode .dispositivo-card { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: #ffffff; }
-body.dark-mode .dispositivo-card.activo { background: #0071E3; border-color: #0071E3; }
-body.dark-mode .accesorio-item,
-body.dark-mode .checkbox-group,
-body.dark-mode .tipo-cambio-info { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12); }
-body.dark-mode .resumen-item { border-bottom-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
-body.dark-mode .theme-toggle-btn { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); color: #ffffff; }
 </style>
 </head>
 <body>
 
 <div class="s-orb s-orb-blue"></div>
 <div class="s-orb s-orb-orange"></div>
-<button type="button" class="theme-toggle-btn" id="btnThemeToggleCalc" onclick="toggleModoOscuroCalc()" title="Cambiar tema">☽</button>
 
 <div class="main-container">
     <div class="container">
@@ -667,7 +653,7 @@ body.dark-mode .theme-toggle-btn { background: rgba(255,255,255,0.1); border-col
             <span id="total-usd" class="precio-moneda">$0.00</span>
         </div>
 
-        <div class="resumen-item total" style="background: #f5f5f7; padding: 12px; border-radius: 12px; border: none; margin-bottom: 0;">
+        <div class="resumen-item total total-crc-box">
             <span>TOTAL CRC:</span>
             <span id="total-crc" class="precio-moneda">₡0.00</span>
         </div>
@@ -1052,29 +1038,6 @@ renderizarAccesoriosFijos();
 renderizarOpcionesGarex();
 renderizarOpcionesSeguro();
 actualizarResumen();
-
-// ═══════════════════════════════════════════
-// MODO OSCURO — igual que el resto de la app: sigue el sistema por defecto,
-// y se puede alternar manualmente con el botón (se recuerda en localStorage)
-// ═══════════════════════════════════════════
-function aplicarModoOscuroCalc(activar) {
-    document.body.classList.toggle("dark-mode", activar);
-    const btn = document.getElementById("btnThemeToggleCalc");
-    if (btn) btn.textContent = activar ? "☼" : "☽";
-}
-
-function toggleModoOscuroCalc() {
-    const activar = !document.body.classList.contains("dark-mode");
-    localStorage.setItem("modoOscuroCalc", activar ? "1" : "0");
-    aplicarModoOscuroCalc(activar);
-}
-
-(function inicializarModoOscuroCalc() {
-    const guardado = localStorage.getItem("modoOscuroCalc");
-    const prefiereOscuro = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const activar = guardado !== null ? guardado === "1" : prefiereOscuro;
-    aplicarModoOscuroCalc(activar);
-})();
 </script>
 
 </body>
