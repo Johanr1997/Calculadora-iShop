@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -316,6 +317,29 @@ select:focus, input[type="number"]:focus, input[type="text"]:focus {
     padding: 8px;
 }
 
+.agregado-codigo {
+    flex-basis: 100%;
+    font-size: 12px;
+    color: #86868b;
+    padding-left: 28px;
+    min-height: 0;
+}
+
+.agregado-codigo:empty { display: none; }
+
+.agregado-codigo strong {
+    color: #1D1D1F;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.3px;
+}
+
+.agregado-codigo .alerta-rango {
+    display: block;
+    margin-top: 4px;
+    color: #FF453A;
+    font-weight: 600;
+}
+
 .agregado-costo {
     font-size: 12px;
     color: #0071E3;
@@ -480,6 +504,7 @@ button:active {
     .accesorio-inputs { width: 100%; justify-content: space-between; }
     .checkbox-group { flex-direction: column; align-items: flex-start; gap: 8px; }
     .agregado-selector { width: 100%; }
+    .agregado-codigo { padding-left: 0; }
 }
 
 /* MODO OSCURO — 100% automático vía CSS, sigue el tema del sistema operativo */
@@ -577,6 +602,7 @@ button:active {
                     </select>
                 </div>
                 <span class="agregado-costo" id="costo-garex-display">+$0.00</span>
+                <div class="agregado-codigo" id="codigo-garex"></div>
             </div>
             
             <div class="checkbox-group">
@@ -588,6 +614,7 @@ button:active {
                     </select>
                 </div>
                 <span class="agregado-costo" id="costo-seguro-display">+$0.00</span>
+                <div class="agregado-codigo" id="codigo-seguro"></div>
             </div>
         </div>
 
@@ -696,49 +723,49 @@ button:active {
 </div>
 
 <script>
-// MATRICES GAREX Y SEGUROS SIN ALTERACIÓN
+// MATRICES GAREX Y SEGUROS (fuente: seguros_ordenados_1-3.xlsx) — cod = código del producto
 const dbGarex = {
     "iPhone": [
-        { mesesAdic: 12, rangos: [{ hasta: 250, costo: 13.33 }, { hasta: 500, costo: 26.67 }, { hasta: 1000, costo: 33.33 }, { hasta: 1500, costo: 40 }, { hasta: 2000, costo: 46.67 }, { hasta: 2500, costo: 50 }] },
-        { mesesAdic: 24, rangos: [{ hasta: 250, costo: 20 }, { hasta: 500, costo: 40 }, { hasta: 1000, costo: 50 }, { hasta: 1500, costo: 60 }, { hasta: 2000, costo: 70 }, { hasta: 2500, costo: 75 }] }
+        { mesesAdic: 12, rangos: [{ hasta: 250, costo: 13.33, cod: "GAIPH-12-250" }, { hasta: 500, costo: 26.67, cod: "GAIPH-12-500" }, { hasta: 1000, costo: 33.33, cod: "GAIPH-12-1000" }, { hasta: 1500, costo: 40, cod: "GAIPH-12-1500" }, { hasta: 2000, costo: 46.67, cod: "GAIPH-12-2000" }, { hasta: 2500, costo: 50, cod: "GAIPH-12-2500" }] },
+        { mesesAdic: 24, rangos: [{ hasta: 250, costo: 20, cod: "GAIPH-24-250" }, { hasta: 500, costo: 40, cod: "GAIPH-24-500" }, { hasta: 1000, costo: 50, cod: "GAIPH-24-1000" }, { hasta: 1500, costo: 60, cod: "GAIPH-24-1500" }, { hasta: 2000, costo: 70, cod: "GAIPH-24-2000" }, { hasta: 2500, costo: 75, cod: "GAIPH-24-2500" }] }
     ],
     "Otros": [
-        { mesesAdic: 36, rangos: [{ hasta: 50, costo: 6 }, { hasta: 100, costo: 10 }, { hasta: 250, costo: 20 }, { hasta: 500, costo: 40 }, { hasta: 1000, costo: 50 }, { hasta: 1500, costo: 60 }, { hasta: 2000, costo: 70 }, { hasta: 2500, costo: 75 }, { hasta: 3000, costo: 85 }, { hasta: 5000, costo: 110 }] }
+        { mesesAdic: 36, rangos: [{ hasta: 50, costo: 6, cod: "GAGEN-36-50" }, { hasta: 100, costo: 10, cod: "GAGEN-36-100" }, { hasta: 250, costo: 20, cod: "GAGEN-36-250" }, { hasta: 500, costo: 40, cod: "GAGEN-36-500" }, { hasta: 1000, costo: 50, cod: "GAGEN-36-1000" }, { hasta: 1500, costo: 60, cod: "GAGEN-36-1500" }, { hasta: 2000, costo: 70, cod: "GAGEN-36-2000" }, { hasta: 2500, costo: 75, cod: "GAGEN-36-2500" }, { hasta: 3000, costo: 85, cod: "GAGEN-36-3000" }, { hasta: 5000, costo: 110, cod: "GAGEN-36-5000" }] }
     ]
 };
 
 const dbSeguros = {
     "iPhone": [
-        { tipo: "Robo y Hurto", meses: 12, rangos: [{ hasta: 450, c: 40 }, { hasta: 650, c: 64 }, { hasta: 900, c: 90 }, { hasta: 1250, c: 95 }, { hasta: 1625, c: 140 }, { hasta: 2000, c: 175 }, { hasta: 2375, c: 210 }, { hasta: 3000, c: 255 }] },
-        { tipo: "Robo y Hurto", meses: 18, rangos: [{ hasta: 450, c: 55 }, { hasta: 650, c: 90 }, { hasta: 1250, c: 135 }, { hasta: 1625, c: 195 }, { hasta: 2000, c: 245 }, { hasta: 2375, c: 295 }, { hasta: 3000, c: 360 }] },
-        { tipo: "Robo y Hurto", meses: 24, rangos: [{ hasta: 450, c: 65 }, { hasta: 650, c: 105 }, { hasta: 900, c: 140 }, { hasta: 1250, c: 150 }, { hasta: 1625, c: 220 }, { hasta: 2000, c: 280 }, { hasta: 2375, c: 340 }, { hasta: 3000, c: 410 }] },
-        { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 450, c: 80 }, { hasta: 650, c: 130 }, { hasta: 900, c: 185 }, { hasta: 1250, c: 195 }, { hasta: 1625, c: 280 }, { hasta: 2000, c: 355 }, { hasta: 2375, c: 430 }, { hasta: 3000, c: 520 }] },
-        { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 450, c: 115 }, { hasta: 650, c: 180 }, { hasta: 900, c: 255 }, { hasta: 1250, c: 275 }, { hasta: 1625, c: 395 }, { hasta: 2000, c: 495 }, { hasta: 2375, c: 600 }, { hasta: 3000, c: 730 }] },
-        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 450, c: 130 }, { hasta: 650, c: 205 }, { hasta: 900, c: 290 }, { hasta: 1250, c: 310 }, { hasta: 450, c: 450 }, { hasta: 2000, c: 565 }, { hasta: 2375, c: 690 }, { hasta: 3000, c: 835 }] }
+        { tipo: "Robo y Hurto", meses: 12, rangos: [{ hasta: 450, c: 40, cod: "P1IPHONER12m" }, { hasta: 650, c: 64, cod: "P2IPHONER12m" }, { hasta: 900, c: 90, cod: "P3IPHONER12m" }, { hasta: 1250, c: 95, cod: "P4IPHONER12m" }, { hasta: 1625, c: 140, cod: "P5IPHONER12m" }, { hasta: 2000, c: 175, cod: "P6IPHONER12m" }, { hasta: 2375, c: 210, cod: "P7IPHONER12m" }, { hasta: 3000, c: 255, cod: "P8IPHONER12m" }] },
+        { tipo: "Robo y Hurto", meses: 18, rangos: [{ hasta: 450, c: 55, cod: "P1IPHONER18m" }, { hasta: 650, c: 90, cod: "P2IPHONER18m" }, { hasta: 900, c: 125, cod: "P3IPHONER18m" }, { hasta: 1250, c: 135, cod: "P4IPHONER18m" }, { hasta: 1625, c: 195, cod: "P5IPHONER18m" }, { hasta: 2000, c: 245, cod: "P6IPHONER18m" }, { hasta: 2375, c: 295, cod: "P7IPHONER18m" }, { hasta: 3000, c: 360, cod: "P8IPHONER18m" }] },
+        { tipo: "Robo y Hurto", meses: 24, rangos: [{ hasta: 450, c: 65, cod: "P1IPHONER24m" }, { hasta: 650, c: 105, cod: "P2IPHONER24m" }, { hasta: 900, c: 140, cod: "P3IPHONER24m" }, { hasta: 1250, c: 150, cod: "P4IPHONER24m" }, { hasta: 1625, c: 220, cod: "P5IPHONER24m" }, { hasta: 2000, c: 280, cod: "P6IPHONER24m" }, { hasta: 2375, c: 340, cod: "P7IPHONER24m" }, { hasta: 3000, c: 410, cod: "P8IPHONER24m" }] },
+        { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 450, c: 80, cod: "P1IPHONED12m" }, { hasta: 650, c: 130, cod: "P2IPHONED12m" }, { hasta: 900, c: 185, cod: "P3IPHONED12m" }, { hasta: 1250, c: 195, cod: "P4IPHONED12m" }, { hasta: 1625, c: 280, cod: "P5IPHONED12m" }, { hasta: 2000, c: 355, cod: "P6IPHONED12m" }, { hasta: 2375, c: 430, cod: "P7IPHONED12m" }, { hasta: 3000, c: 520, cod: "P8IPHONED12m" }] },
+        { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 450, c: 115, cod: "P1IPHONED18m" }, { hasta: 650, c: 180, cod: "P2IPHONED18m" }, { hasta: 900, c: 255, cod: "P3IPHONED18m" }, { hasta: 1250, c: 275, cod: "P4IPHONED18m" }, { hasta: 1625, c: 395, cod: "P5IPHONED18m" }, { hasta: 2000, c: 495, cod: "P6IPHONED18m" }, { hasta: 2375, c: 600, cod: "P7IPHONED18m" }, { hasta: 3000, c: 730, cod: "P8IPHONED18m" }] },
+        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 450, c: 130, cod: "P1IPHONED24m" }, { hasta: 650, c: 205, cod: "P2IPHONED24m" }, { hasta: 900, c: 290, cod: "P3IPHONED24m" }, { hasta: 1250, c: 310, cod: "P4IPHONED24m" }, { hasta: 1625, c: 450, cod: "P5IPHONED24m" }, { hasta: 2000, c: 565, cod: "P6IPHONED24m" }, { hasta: 2375, c: 690, cod: "P7IPHONED24m" }, { hasta: 3000, c: 835, cod: "P8IPHONED24m" }] }
     ],
     "MacBook": [
-        { tipo: "Accidental", meses: 12, rangos: [{ hasta: 800, c: 45 }, { hasta: 1000, c: 60 }, { hasta: 1500, c: 75 }, { hasta: 2000, c: 130 }, { hasta: 2500, c: 155 }, { hasta: 4250, c: 195 }, { hasta: 5000, c: 280 }, { hasta: 6250, c: 340 }] },
-        { tipo: "Accidental", meses: 18, rangos: [{ hasta: 800, c: 65 }, { hasta: 1000, c: 85 }, { hasta: 1500, c: 110 }, { hasta: 2000, c: 180 }, { hasta: 2150, c: 215 }, { hasta: 4250, c: 275 }, { hasta: 5000, c: 390 }, { hasta: 6250, c: 475 }] },
-        { tipo: "Accidental", meses: 24, rangos: [{ hasta: 800, c: 70 }, { hasta: 1000, c: 100 }, { hasta: 1500, c: 125 }, { hasta: 210 }, { hasta: 2450, c: 245 }, { hasta: 4250, c: 310 }, { hasta: 5000, c: 445 }, { hasta: 6250, c: 540 }] },
-        { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 800, c: 70 }, { hasta: 1000, c: 95 }, { hasta: 1500, c: 130 }, { hasta: 2000, c: 215 }, { hasta: 2500, c: 280 }, { hasta: 4250, c: 355 }, { hasta: 5000, c: 510 }, { hasta: 6250, c: 615 }] },
-        { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 800, c: 95 }, { hasta: 1000, c: 130 }, { hasta: 1500, c: 180 }, { hasta: 2000, c: 305 }, { hasta: 2500, c: 390 }, { hasta: 4250, c: 500 }, { hasta: 5000, c: 710 }, { hasta: 6250, c: 865 }] },
-        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 800, c: 110 }, { hasta: 1000, c: 150 }, { hasta: 1500, c: 210 }, { hasta: 2000, c: 345 }, { hasta: 2500, c: 450 }, { hasta: 4250, c: 570 }, { hasta: 5000, c: 810 }, { hasta: 6250, c: 985 }] }
+        { tipo: "Accidental", meses: 12, rangos: [{ hasta: 800, c: 45, cod: "P1MACD12m" }, { hasta: 1000, c: 60, cod: "P2MACD12m" }, { hasta: 1500, c: 75, cod: "P3MACD12m" }, { hasta: 2000, c: 130, cod: "P4MACD12m" }, { hasta: 2500, c: 155, cod: "P5MACD12m" }, { hasta: 4250, c: 195, cod: "P6MACD12m" }, { hasta: 5000, c: 280, cod: "P7MACD12m" }, { hasta: 6250, c: 340, cod: "P8MACD12m" }] },
+        { tipo: "Accidental", meses: 18, rangos: [{ hasta: 800, c: 65, cod: "P1MACD18m" }, { hasta: 1000, c: 85, cod: "P2MACD18m" }, { hasta: 1500, c: 110, cod: "P3MACD18m" }, { hasta: 2000, c: 180, cod: "P4MACD18m" }, { hasta: 2500, c: 215, cod: "P5MACD18m" }, { hasta: 4250, c: 275, cod: "P6MACD18m" }, { hasta: 5000, c: 390, cod: "P7MACD18m" }, { hasta: 6250, c: 475, cod: "P8MACD18m" }] },
+        { tipo: "Accidental", meses: 24, rangos: [{ hasta: 800, c: 70, cod: "P1MACD24m" }, { hasta: 1000, c: 100, cod: "P2MACD24m" }, { hasta: 1500, c: 125, cod: "P3MACD24m" }, { hasta: 2000, c: 210, cod: "P4MACD24m" }, { hasta: 2500, c: 245, cod: "P5MACD24m" }, { hasta: 4250, c: 310, cod: "P6MACD24m" }, { hasta: 5000, c: 445, cod: "P7MACD24m" }, { hasta: 6250, c: 540, cod: "P8MACD24m" }] },
+        { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 800, c: 70, cod: "P1MACRD12m" }, { hasta: 1000, c: 95, cod: "P2MACRD12m" }, { hasta: 1500, c: 130, cod: "P3MACRD12m" }, { hasta: 2000, c: 215, cod: "P4MACRD12m" }, { hasta: 2500, c: 280, cod: "P5MACRD12m" }, { hasta: 4250, c: 355, cod: "P6MACRD12m" }, { hasta: 5000, c: 510, cod: "P7MACRD12m" }, { hasta: 6250, c: 615, cod: "P8MACRD12m" }] },
+        { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 800, c: 95, cod: "P1MACRD18m" }, { hasta: 1000, c: 130, cod: "P2MACRD18m" }, { hasta: 1500, c: 180, cod: "P3MACRD18m" }, { hasta: 2000, c: 305, cod: "P4MACRD18m" }, { hasta: 2500, c: 390, cod: "P5MACRD18m" }, { hasta: 4250, c: 500, cod: "P6MACRD18m" }, { hasta: 5000, c: 710, cod: "P7MACRD18m" }, { hasta: 6250, c: 865, cod: "P8MACRD18m" }] },
+        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 800, c: 110, cod: "P1MACRD24m" }, { hasta: 1000, c: 150, cod: "P2MACRD24m" }, { hasta: 1500, c: 210, cod: "P3MACRD24m" }, { hasta: 2000, c: 345, cod: "P4MACRD24m" }, { hasta: 2500, c: 450, cod: "P5MACRD24m" }, { hasta: 4250, c: 570, cod: "P6MACRD24m" }, { hasta: 5000, c: 810, cod: "P7MACRD24m" }, { hasta: 6250, c: 985, cod: "P8MACRD24m" }] }
     ],
     "iPad": [
-        { tipo: "Robo y Hurto", meses: 12, rangos: [{ hasta: 450, c: 25 }, { hasta: 650, c: 40 }, { hasta: 900, c: 55 }, { hasta: 1250, c: 65 }, { hasta: 1625, c: 85 }, { hasta: 2000, c: 105 }, { hasta: 2375, c: 125 }, { hasta: 2625, c: 145 }, { hasta: 2875, c: 160 }, { hasta: 3125, c: 175 }, { hasta: 3500, c: 190 }, { hasta: 3875, c: 210 }, { hasta: 5000, c: 285 }] },
-        { tipo: "Robo y Hurto", meses: 18, rangos: [{ hasta: 450, c: 35 }, { hasta: 650, c: 55 }, { hasta: 900, c: 75 }, { hasta: 1250, c: 90 }, { hasta: 1625, c: 116 }, { hasta: 2000, c: 145 }, { hasta: 2375, c: 175 }, { hasta: 2625, c: 200 }, { hasta: 2875, c: 220 }, { hasta: 3125, c: 240 }, { hasta: 3500, c: 265 }, { hasta: 3875, c: 295 }, { hasta: 5000, c: 400 }] },
-        { tipo: "Robo y Hurto", meses: 24, rangos: [{ hasta: 450, c: 40 }, { hasta: 650, c: 60 }, { hasta: 900, c: 85 }, { hasta: 1250, c: 100 }, { hasta: 1625, c: 135 }, { hasta: 2000, c: 170 }, { hasta: 2375, c: 200 }, { hasta: 2625, c: 230 }, { hasta: 2875, c: 255 }, { hasta: 3125, c: 275 }, { hasta: 3500, c: 305 }, { hasta: 3875, c: 340 }, { hasta: 5000, c: 455 }] },
-        { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 450, c: 50 }, { hasta: 650, c: 80 }, { hasta: 900, c: 110 }, { hasta: 1250, c: 130 }, { hasta: 1625, c: 170 }, { hasta: 2000, c: 210 }, { hasta: 260 }, { hasta: 2625, c: 295 }, { hasta: 2875, c: 325 }, { hasta: 3125, c: 350 }, { hasta: 3900, c: 390 }, { hasta: 3875, c: 435 }, { hasta: 5000, c: 570 }] },
-        { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 450, c: 70 }, { hasta: 650, c: 110 }, { hasta: 900, c: 155 }, { hasta: 1250, c: 185 }, { hasta: 2375, c: 235 }, { hasta: 2000, c: 300 }, { hasta: 2375, c: 360 }, { hasta: 2625, c: 410 }, { hasta: 2875, c: 450 }, { milestone: 3125, c: 495 }, { hasta: 3500, c: 545 }, { hasta: 3875, c: 605 }, { hasta: 5000, c: 800 }] },
-        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 450, c: 80 }, { hasta: 650, c: 125 }, { hasta: 900, c: 175 }, { hasta: 1250, c: 210 }, { hasta: 1625, c: 270 }, { hasta: 2000, c: 340 }, { hasta: 2375, c: 410 }, { hasta: 2625, c: 470 }, { hasta: 2875, c: 515 }, { hasta: 3125, c: 565 }, { hasta: 3500, c: 620 }, { hasta: 3875, c: 690 }, { hasta: 5000, c: 915 }] }
+        { tipo: "Robo y Hurto", meses: 12, rangos: [{ hasta: 450, c: 25, cod: "P1IPADR12m" }, { hasta: 650, c: 40, cod: "P2IPADR12m" }, { hasta: 900, c: 55, cod: "P3IPADR12m" }, { hasta: 1250, c: 65, cod: "P4IPADR12m" }, { hasta: 1625, c: 85, cod: "P5IPADR12m" }, { hasta: 2000, c: 105, cod: "P6IPADR12m" }, { hasta: 2375, c: 125, cod: "P7IPADR12m" }, { hasta: 2625, c: 145, cod: "P8IPADR12m" }, { hasta: 2875, c: 160, cod: "P9IPADR12m" }, { hasta: 3125, c: 175, cod: "P10IPADR12m" }, { hasta: 3500, c: 190, cod: "P11IPADR12m" }, { hasta: 3875, c: 210, cod: "P12IPADR12m" }, { hasta: 5000, c: 285, cod: "P13IPADR12m" }] },
+        { tipo: "Robo y Hurto", meses: 18, rangos: [{ hasta: 450, c: 35, cod: "P1IPADR18m" }, { hasta: 650, c: 55, cod: "P2IPADR18m" }, { hasta: 900, c: 75, cod: "P3IPADR18m" }, { hasta: 1250, c: 90, cod: "P4IPADR18m" }, { hasta: 1625, c: 116, cod: "P5IPADR18m" }, { hasta: 2000, c: 145, cod: "P6IPADR18m" }, { hasta: 2375, c: 175, cod: "P7IPADR18m" }, { hasta: 2625, c: 200, cod: "P8IPADR18m" }, { hasta: 2875, c: 220, cod: "P9IPADR18m" }, { hasta: 3125, c: 240, cod: "P10IPADR18m" }, { hasta: 3500, c: 265, cod: "P11IPADR18m" }, { hasta: 3875, c: 295, cod: "P12IPADR18m" }, { hasta: 5000, c: 400, cod: "P13IPADR18m" }] },
+        { tipo: "Robo y Hurto", meses: 24, rangos: [{ hasta: 450, c: 40, cod: "P1IPADR24m" }, { hasta: 650, c: 60, cod: "P2IPADR24m" }, { hasta: 900, c: 85, cod: "P3IPADR24m" }, { hasta: 1250, c: 100, cod: "P4IPADR24m" }, { hasta: 1625, c: 135, cod: "P5IPADR24m" }, { hasta: 2000, c: 170, cod: "P6IPADR24m" }, { hasta: 2375, c: 200, cod: "P7IPADR24m" }, { hasta: 2625, c: 230, cod: "P8IPADR24m" }, { hasta: 2875, c: 255, cod: "P9IPADR24m" }, { hasta: 3125, c: 275, cod: "P10IPADR24m" }, { hasta: 3500, c: 305, cod: "P11IPADR24m" }, { hasta: 3875, c: 340, cod: "P12IPADR24m" }, { hasta: 5000, c: 455, cod: "P13IPADR24m" }] },
+        { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 450, c: 50, cod: "P1IPADD12m" }, { hasta: 650, c: 80, cod: "P2IPADD12m" }, { hasta: 900, c: 110, cod: "P3IPADD12m" }, { hasta: 1250, c: 130, cod: "P4IPADD12m" }, { hasta: 1625, c: 170, cod: "P5IPADD12m" }, { hasta: 2000, c: 210, cod: "P6IPADD12m" }, { hasta: 2375, c: 260, cod: "P7IPADD12m" }, { hasta: 2625, c: 295, cod: "P8IPADD12m" }, { hasta: 2875, c: 325, cod: "P9IPADD12m" }, { hasta: 3125, c: 350, cod: "P10IPADD12m" }, { hasta: 3500, c: 390, cod: "P11IPADD12m" }, { hasta: 3875, c: 435, cod: "P12IPADD12m" }, { hasta: 5000, c: 570, cod: "P13IPADD12m" }] },
+        { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 450, c: 70, cod: "P1IPADD18m" }, { hasta: 650, c: 110, cod: "P2IPADD18m" }, { hasta: 900, c: 155, cod: "P3IPADD18m" }, { hasta: 1250, c: 185, cod: "P4IPADD18m" }, { hasta: 1625, c: 235, cod: "P5IPADD18m" }, { hasta: 2000, c: 300, cod: "P6IPADD18m" }, { hasta: 2375, c: 360, cod: "P7IPADD18m" }, { hasta: 2625, c: 410, cod: "P8IPADD18m" }, { hasta: 2875, c: 450, cod: "P9IPADD18m" }, { hasta: 3125, c: 495, cod: "P10IPADD18m" }, { hasta: 3500, c: 545, cod: "P11IPADD18m" }, { hasta: 3875, c: 605, cod: "P12IPADD18m" }, { hasta: 5000, c: 800, cod: "P13IPADD18m" }] },
+        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 450, c: 80, cod: "P1IPADD24m" }, { hasta: 650, c: 125, cod: "P2IPADD24m" }, { hasta: 900, c: 175, cod: "P3IPADD24m" }, { hasta: 1250, c: 210, cod: "P4IPADD24m" }, { hasta: 1625, c: 270, cod: "P5IPADD24m" }, { hasta: 2000, c: 340, cod: "P6IPADD24m" }, { hasta: 2375, c: 410, cod: "P7IPADD24m" }, { hasta: 2625, c: 470, cod: "P8IPADD24m" }, { hasta: 2875, c: 515, cod: "P9IPADD24m" }, { hasta: 3125, c: 565, cod: "P10IPADD24m" }, { hasta: 3500, c: 620, cod: "P11IPADD24m" }, { hasta: 3875, c: 690, cod: "P12IPADD24m" }, { hasta: 5000, c: 915, cod: "P13IPADD24m" }] }
     ],
     "Watch": [
-        { tipo: "Servicio Robo", meses: 12, rangos: [{ hasta: 450, c: 15 }, { hasta: 650, c: 25 }, { hasta: 900, c: 35 }, { hasta: 1150, c: 45 }, { hasta: 1400, c: 55 }] },
-        { tipo: "Servicio Robo", meses: 18, rangos: [{ hasta: 450, c: 20 }, { hasta: 650, c: 30 }, { hasta: 900, c: 45 }, { hasta: 1150, c: 60 }, { hasta: 1400, c: 95 }] },
-        { tipo: "Servicio Robo", meses: 24, rangos: [{ hasta: 450, c: 25 }, { hasta: 650, c: 40 }, { hasta: 900, c: 50 }, { hasta: 1150, c: 70 }, { hasta: 1400, c: 85 }] },
-        { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 450, c: 45 }, { hasta: 650, c: 70 }, { hasta: 900, c: 95 }, { hasta: 1150, c: 110 }, { hasta: 1400, c: 130 }] },
-        { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 450, c: 60 }, { hasta: 650, c: 95 }, { hasta: 900, c: 135 }, { hasta: 1150, c: 155 }, { hasta: 1400, c: 185 }] },
-        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 450, c: 70 }, { hasta: 650, c: 110 }, { hasta: 900, c: 155 }, { hasta: 1150, c: 175 }, { hasta: 1400, c: 210 }] }
+        { tipo: "Servicio Robo", meses: 12, rangos: [{ hasta: 450, c: 15, cod: "P1WATCHR12m" }, { hasta: 650, c: 25, cod: "P2WATCHR12m" }, { hasta: 900, c: 35, cod: "P3WATCHR12m" }, { hasta: 1150, c: 45, cod: "P4WATCHR12m" }, { hasta: 1400, c: 55, cod: "P5WATCHR12m" }] },
+        { tipo: "Servicio Robo", meses: 18, rangos: [{ hasta: 450, c: 20, cod: "P1WATCHR18m" }, { hasta: 650, c: 30, cod: "P2WATCHR18m" }, { hasta: 900, c: 45, cod: "P3WATCHR18m" }, { hasta: 1150, c: 60, cod: "P4WATCHR18m" }, { hasta: 1400, c: 75, cod: "P5WATCHR18m" }] },
+        { tipo: "Servicio Robo", meses: 24, rangos: [{ hasta: 450, c: 25, cod: "P1WATCHR24m" }, { hasta: 650, c: 40, cod: "P2WATCHR24m" }, { hasta: 900, c: 50, cod: "P3WATCHR24m" }, { hasta: 1150, c: 70, cod: "P4WATCHR24m" }, { hasta: 1400, c: 85, cod: "P5WATCHR24m" }] },
+        { tipo: "Robo + Accidental", meses: 12, rangos: [{ hasta: 450, c: 45, cod: "P1WATCHD12m" }, { hasta: 650, c: 70, cod: "P2WATCHD12m" }, { hasta: 900, c: 95, cod: "P3WATCHD12m" }, { hasta: 1150, c: 110, cod: "P4WATCHD12m" }, { hasta: 1400, c: 130, cod: "P5WATCHD12m" }] },
+        { tipo: "Robo + Accidental", meses: 18, rangos: [{ hasta: 450, c: 60, cod: "P1WATCHD18m" }, { hasta: 650, c: 95, cod: "P2WATCHD18m" }, { hasta: 900, c: 135, cod: "P3WATCHD18m" }, { hasta: 1150, c: 155, cod: "P4WATCHD18m" }, { hasta: 1400, c: 185, cod: "P5WATCHD18m" }] },
+        { tipo: "Robo + Accidental", meses: 24, rangos: [{ hasta: 450, c: 70, cod: "P1WATCHD24m" }, { hasta: 650, c: 110, cod: "P2WATCHD24m" }, { hasta: 900, c: 155, cod: "P3WATCHD24m" }, { hasta: 1150, c: 175, cod: "P4WATCHD24m" }, { hasta: 1400, c: 210, cod: "P5WATCHD24m" }] }
     ]
 };
 
@@ -951,20 +978,36 @@ document.getElementById("agregar-seguro").addEventListener("change", function() 
     actualizarResumen();
 });
 
+// El precio de Garex/Seguro depende SOLO del precio original del dispositivo
+// (no incluye accesorios, prima ni trade-in).
+function buscarRango(rangos, precio) {
+    let rango = rangos.find(r => precio <= r.hasta);
+    if (rango) return { rango, excede: false };
+    return { rango: rangos[rangos.length - 1], excede: true };
+}
+
 function obtenerCostoGarex(precio, meses) {
     let llave = (dispositivoActual === "iPhone") ? "iPhone" : "Otros";
     let configuracion = dbGarex[llave].find(g => g.mesesAdic == meses);
-    if(!configuracion) return 0;
-    let rango = configuracion.rangos.find(r => precio <= r.hasta);
-    return rango ? rango.costo : configuracion.rangos[configuracion.rangos.length - 1].costo;
+    if (!configuracion) return null;
+    const { rango, excede } = buscarRango(configuracion.rangos, precio);
+    return { costo: rango.costo, cod: rango.cod, excede, tope: rango.hasta };
 }
 
 function obtenerCostoSeguro(precio, tipo, meses) {
-    if(!dbSeguros[dispositivoActual]) return 0;
+    if (!dbSeguros[dispositivoActual]) return null;
     let configuracion = dbSeguros[dispositivoActual].find(s => s.tipo === tipo && s.meses == meses);
-    if(!configuracion) return 0;
-    let rango = configuracion.rangos.find(r => precio <= r.hasta);
-    return rango ? rango.c : configuracion.rangos[configuracion.rangos.length - 1].c;
+    if (!configuracion) return null;
+    const { rango, excede } = buscarRango(configuracion.rangos, precio);
+    return { costo: rango.c, cod: rango.cod, excede, tope: rango.hasta };
+}
+
+function mostrarCodigo(id, info) {
+    const el = document.getElementById(id);
+    if (!info) { el.innerHTML = ""; return; }
+    let h = `Código: <strong>${info.cod}</strong>`;
+    if (info.excede) h += `<span class="alerta-rango">⚠ El precio excede el rango máximo ($${info.tope}). Se muestra el último rango.</span>`;
+    el.innerHTML = h;
 }
 
 // CÁLCULO GENERAL DE LA CUOTA Y DESGLOSE
@@ -987,19 +1030,27 @@ function actualizarResumen() {
     });
     
     let costoGarex = 0;
+    let infoGarex = null;
+    let infoSeguro = null;
     if (document.getElementById("agregar-garex").checked) {
         const mesesGarex = document.getElementById("garex-select").value;
-        if (mesesGarex) costoGarex = obtenerCostoGarex(precioDispositivo, mesesGarex);
+        if (mesesGarex) {
+            infoGarex = obtenerCostoGarex(precioDispositivo, mesesGarex);
+            if (infoGarex) costoGarex = infoGarex.costo;
+        }
     }
+    mostrarCodigo("codigo-garex", infoGarex);
     
     let costoSeguro = 0;
     if (document.getElementById("agregar-seguro").checked) {
         const seguroValue = document.getElementById("seguro-select").value;
         if (seguroValue) {
             const [tipo, meses] = seguroValue.split("|");
-            costoSeguro = obtenerCostoSeguro(precioDispositivo, tipo, meses);
+            infoSeguro = obtenerCostoSeguro(precioDispositivo, tipo, meses);
+            if (infoSeguro) costoSeguro = infoSeguro.costo;
         }
     }
+    mostrarCodigo("codigo-seguro", infoSeguro);
     
     let prima = parseFloat(document.getElementById("prima").value) || 0;
     let tradein = parseFloat(document.getElementById("tradein").value) || 0;
